@@ -1,9 +1,9 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "community-church-of-syosset",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
-  "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "description": "Website of the Community Church of Syosset.",
+  "version": "1.0.0",
+  "author": "Nathaniel J. Liberty <nathaniel.liberty@gmail.com>",
   "dependencies": {
     "gatsby": "^2.18.4",
     "gatsby-image": "^2.2.34",
@@ -21,24 +21,14 @@
   "devDependencies": {
     "prettier": "^1.19.1"
   },
-  "keywords": [
-    "gatsby"
-  ],
-  "license": "MIT",
+  "license": "UNLICENSED",
   "scripts": {
     "build": "gatsby build",
-    "develop": "gatsby develop",
+    "develop": "gatsby develop -H 0.0.0.0 -o",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
-    "serve": "gatsby serve",
+    "serve": "gatsby serve -H 0.0.0.0 -o",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
-  },
-  "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
   }
 }
