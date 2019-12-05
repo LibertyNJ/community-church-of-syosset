@@ -1,8 +1,9 @@
 module.exports = {
   siteMetadata: {
-    title: 'Community Church of Syosset',
-    description: '',
     author: 'Nathaniel J. Liberty',
+    description:
+      'An open and affirming congregation of the United Church of Christ in Syosset, New York. No matter who you are, or where you are on life’s journey, you are welcome here!',
+    title: 'Community Church of Syosset',
   },
   plugins: [
     {
@@ -11,7 +12,7 @@ module.exports = {
         background_color: '#fff',
         display: 'minimal-ui',
         name: 'Community Church of Syosset',
-        short_name: 'starter',
+        short_name: 'CCoS',
         start_url: '/',
         theme_color: '#fff',
         // icon: 'src/images/gatsby-icon.png', // This path is relative to the root of the site.
