@@ -18,7 +18,7 @@ export default function IndexPage({ ...restProps }) {
           where God is still speaking.
         </p>
         <Link to="#">Visit us</Link>
-        <Link to="/about">Learn more</Link>
+        <Link to="/about">Who we are</Link>
       </Layout>
     </>
   );
