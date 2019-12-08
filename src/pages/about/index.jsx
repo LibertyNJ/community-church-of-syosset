@@ -1,8 +1,8 @@
 import { Link } from 'gatsby';
 import React from 'react';
 
-import Layout from '../components/Layout';
-import SEO from '../components/SEO';
+import Layout from '../../components/Layout';
+import SEO from '../../components/SEO';
 
 export default function AboutPage({ ...restProps }) {
   return (
@@ -51,7 +51,7 @@ export default function AboutPage({ ...restProps }) {
           </p>
         </section>
         <Link to="#">Visit us</Link>
-        <Link to="#">What we believe</Link>
+        <Link to="/about/belief">What we believe</Link>
       </Layout>
     </>
   );
