@@ -54,7 +54,7 @@ export default function BeliefPage({ ...restProps }) {
           <p>Amen.</p>
         </section>
         <Link to="#">Visit us</Link>
-        <Link to="#">Meet our pastor</Link>
+        <Link to="/about/pastor">Meet our pastor</Link>
       </Layout>
     </>
   );
