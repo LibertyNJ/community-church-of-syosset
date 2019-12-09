@@ -44,7 +44,13 @@ export default function ContactPage({ ...restProps }) {
           </div>
           <div>
             <label htmlFor="phone">Phone</label>
-            <input form="contact-form" id="phone" name="phone" type="tel" />
+            <input
+              form="contact-form"
+              id="phone"
+              name="phone"
+              pattern="^((\([0-9]{3}\))|([0-9]{3}-?))[2-9][0-9]{2}-?[0-9]{4}$"
+              type="tel"
+            />
           </div>
           <div>
             <label htmlFor="message">Message</label>
