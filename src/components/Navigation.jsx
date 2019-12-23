@@ -35,6 +35,9 @@ export default function Navigation({ ...restProps }) {
           <Link to="/sermons">Sermons</Link>
         </li>
         <li>
+          <Link to="/prayer-list">Prayer list</Link>
+        </li>
+        <li>
           <Link to="/nursery-school">Nursery school</Link>
         </li>
         <li>
