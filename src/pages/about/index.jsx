@@ -50,7 +50,7 @@ export default function AboutPage({ ...restProps }) {
             orientations into every aspect of church life and ministry.
           </p>
         </section>
-        <Link to="#">Visit us</Link>
+        <Link to="/visit">Visit us</Link>
         <Link to="/about/belief">What we believe</Link>
       </Layout>
     </>

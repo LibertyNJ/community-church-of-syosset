@@ -20,7 +20,7 @@ export default function PastorPage({ ...restProps }) {
             neque exercitationem tempora magni laborum assumenda eveniet.
           </p>
         </section>
-        <Link to="#">Visit us</Link>
+        <Link to="/visit">Visit us</Link>
       </Layout>
     </>
   );

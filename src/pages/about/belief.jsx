@@ -53,7 +53,7 @@ export default function BeliefPage({ ...restProps }) {
           <p>Blessing and honor, glory and power be unto God.</p>
           <p>Amen.</p>
         </section>
-        <Link to="#">Visit us</Link>
+        <Link to="/visit">Visit us</Link>
         <Link to="/about/pastor">Meet our pastor</Link>
       </Layout>
     </>

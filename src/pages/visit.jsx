@@ -1,6 +1,7 @@
 import { Link } from 'gatsby';
 import React from 'react';
 
+import ExternalLink from '../components/ExternalLink';
 import Layout from '../components/Layout';
 import SEO from '../components/SEO';
 
@@ -27,13 +28,10 @@ export default function VisitPage({ ...restProps }) {
           >
             <p>
               Your browser does not support HTML <code>iframe</code> elements.{' '}
-              <a
-                href="https://goo.gl/maps/LnUjQnHs7k9ftwH98"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Find the Community Church of Syosset with Google Maps.
-              </a>
+              <ExternalLink href="https://goo.gl/maps/LnUjQnHs7k9ftwH98">
+                Find the Community Church of Syosset with Google Maps
+              </ExternalLink>
+              .
             </p>
           </iframe>
           <p>

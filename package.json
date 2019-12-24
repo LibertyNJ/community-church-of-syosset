@@ -5,12 +5,13 @@
   "version": "1.0.0",
   "author": "Nathaniel J. Liberty <nathaniel.liberty@gmail.com>",
   "dependencies": {
-    "gatsby": "^2.18.4",
+    "gatsby": "^2.18.17",
     "gatsby-image": "^2.2.34",
     "gatsby-plugin-manifest": "^2.2.30",
     "gatsby-plugin-offline": "^3.0.24",
     "gatsby-plugin-react-helmet": "^3.1.16",
     "gatsby-plugin-sharp": "^2.3.4",
+    "gatsby-source-contentful": "^2.1.73",
     "gatsby-source-filesystem": "^2.1.39",
     "gatsby-transformer-sharp": "^2.3.6",
     "prop-types": "^15.7.2",
@@ -19,6 +20,7 @@
     "react-helmet": "^5.2.1"
   },
   "devDependencies": {
+    "dotenv": "^8.2.0",
     "prettier": "^1.19.1"
   },
   "license": "UNLICENSED",

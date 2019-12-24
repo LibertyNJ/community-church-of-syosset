@@ -17,7 +17,7 @@ export default function IndexPage({ ...restProps }) {
           An open and affirming congregation of the United Church of Christ,
           where God is still speaking.
         </p>
-        <Link to="#">Visit us</Link>
+        <Link to="/visit">Visit us</Link>
         <Link to="/about">Who we are</Link>
       </Layout>
     </>

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import CopyrightWidget from './CopyrightWidget';
+import ExternalLink from './ExternalLink';
 
 export default function Footer({ ...restProps }) {
   return (
@@ -15,34 +16,22 @@ export default function Footer({ ...restProps }) {
         <p>Our greater church</p>
         <ul>
           <li>
-            <a
-              href="https://www.ucc.org/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
+            <ExternalLink href="https://www.ucc.org/">
               United Church of Christ
-            </a>
+            </ExternalLink>
           </li>
           <li>
-            <a
-              href="http://www.uccny.org/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
+            <ExternalLink href="http://www.uccny.org/">
               UCC, New York Conference
-            </a>
+            </ExternalLink>
           </li>
         </ul>
       </div>
       <div>
         <p>Social media</p>
-        <a
-          href="https://www.facebook.com/communitychurchofsyosset/"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
+        <ExternalLink href="https://www.facebook.com/communitychurchofsyosset/">
           Facebook
-        </a>
+        </ExternalLink>
       </div>
       <CopyrightWidget
         copyrightHolder="Community Church of Syosset"
