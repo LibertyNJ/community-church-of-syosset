@@ -5,6 +5,7 @@
   "version": "1.0.0",
   "author": "Nathaniel J. Liberty <nathaniel.liberty@gmail.com>",
   "dependencies": {
+    "@contentful/rich-text-react-renderer": "^13.4.0",
     "gatsby": "^2.18.17",
     "gatsby-image": "^2.2.34",
     "gatsby-plugin-manifest": "^2.2.30",
