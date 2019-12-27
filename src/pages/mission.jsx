@@ -1,9 +1,19 @@
+import { graphql } from 'gatsby';
+import Image from 'gatsby-image';
+import PropTypes from 'prop-types';
 import React from 'react';
 
+import ExternalLink from '../components/ExternalLink';
 import Layout from '../components/Layout';
 import SEO from '../components/SEO';
 
-export default function MissionPage({ ...restProps }) {
+MissionPage.propTypes = {
+  data: PropTypes.shape({
+    allContentfulMission: PropTypes.object.isRequired,
+  }).isRequired,
+};
+
+export default function MissionPage({ data, ...restProps }) {
   return (
     <>
       <SEO title="Mission" />
@@ -18,7 +28,34 @@ export default function MissionPage({ ...restProps }) {
         <p>
           Click on the images below to learn more about the missions we support.
         </p>
+        {data.allContentfulMission.edges.map(({ node }) => (
+          <div key={node.id}>
+            <ExternalLink href={node.url}>
+              <Image fluid={node.image.fluid} />
+              <p>{node.name}</p>
+            </ExternalLink>
+          </div>
+        ))}
       </Layout>
     </>
   );
 }
+
+export const query = graphql`
+  query {
+    allContentfulMission {
+      edges {
+        node {
+          id
+          image {
+            fluid {
+              ...GatsbyContentfulFluid
+            }
+          }
+          name
+          url
+        }
+      }
+    }
+  }
+`;
