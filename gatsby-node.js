@@ -10,6 +10,13 @@ exports.createPages = async ({ actions: { createPage }, graphql }) => {
           }
         }
       }
+      allContentfulPerson {
+        edges {
+          node {
+            slug
+          }
+        }
+      }
       allContentfulSermon {
         edges {
           node {
@@ -27,6 +34,16 @@ exports.createPages = async ({ actions: { createPage }, graphql }) => {
         slug: node.slug,
       },
       path: `events/${node.slug}`,
+    });
+  });
+
+  result.data.allContentfulPerson.edges.forEach(({ node }) => {
+    createPage({
+      component: path.resolve('./src/templates/person.jsx'),
+      context: {
+        slug: node.slug,
+      },
+      path: `people/${node.slug}`,
     });
   });
 
