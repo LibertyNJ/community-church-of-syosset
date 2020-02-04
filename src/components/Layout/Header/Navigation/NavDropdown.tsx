@@ -173,7 +173,7 @@ function getAndSetChildIsActive(
   setChildIsActive: React.Dispatch<React.SetStateAction<boolean>>,
   id: string
 ) {
-  const listElement = document.querySelector(`#${id}`);
+  const listElement = document?.querySelector(`#${id}`);
   const activeChild = listElement?.querySelector('.active');
 
   if (activeChild) {
@@ -185,7 +185,7 @@ function getAndSetListHeight(
   setListHeight: React.Dispatch<React.SetStateAction<number>>,
   id: string
 ) {
-  const listElement = document.querySelector(`#${id}`);
+  const listElement = document?.querySelector(`#${id}`);
   const numberOfListItems = listElement?.children.length;
   const listItemHeight: number | undefined =
     listElement?.children[0].offsetHeight;

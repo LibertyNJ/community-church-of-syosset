@@ -98,7 +98,7 @@ export default Navigation;
 function getAndSetHeaderHeight(
   setHeaderHeight: React.Dispatch<React.SetStateAction<number>>
 ) {
-  const headerElement = document.querySelector('header');
+  const headerElement = document?.querySelector('header');
 
   if (headerElement) {
     setHeaderHeight(headerElement.offsetHeight);
@@ -108,7 +108,7 @@ function getAndSetHeaderHeight(
 function listenForAndHandleDocumentClick(
   setActiveDropdownId: React.Dispatch<React.SetStateAction<string | null>>
 ) {
-  const navigation = document.getElementById('navigation');
+  const navigation = document?.getElementById('navigation');
 
   const handleDocumentClick = event => {
     if (!navigation?.contains(event.target)) {
@@ -116,7 +116,7 @@ function listenForAndHandleDocumentClick(
     }
   };
 
-  document.addEventListener('click', event => handleDocumentClick(event));
+  document?.addEventListener('click', event => handleDocumentClick(event));
 
-  return () => document.removeEventListener('click', handleDocumentClick);
+  return () => document?.removeEventListener('click', handleDocumentClick);
 }
