@@ -2,6 +2,8 @@ import { graphql, useStaticQuery } from 'gatsby';
 import { IFluidObject } from 'gatsby-background-image';
 import React from 'react';
 import styled from 'styled-components';
+import { config as fontAwesomeConfig } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
 
 import Body from './Body';
 import Footer from './Footer';
@@ -9,6 +11,8 @@ import GlobalStyle from './GlobalStyle';
 import Header from './Header';
 import { color } from '../../style';
 import '../../icon-library';
+
+fontAwesomeConfig.autoAddCss = false;
 
 const Container = styled.div`
   display: flex;

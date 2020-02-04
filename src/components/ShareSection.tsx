@@ -15,12 +15,18 @@ const UnorderedList = styled.ul`
   padding-left: 0;
 `;
 
+let locationHref: string | undefined;
+
+if (typeof window !== 'undefined') {
+  locationHref = window.location.href;
+}
+
 type Props = {
   contentType: string;
 };
 
 const ShareSection: React.FC<Props> = ({ contentType }) =>
-  window ? (
+  locationHref ? (
     <section>
       <h2>Share this {contentType}</h2>
       <UnorderedList>
@@ -31,7 +37,7 @@ const ShareSection: React.FC<Props> = ({ contentType }) =>
           />
           <ExternalLink
             href={`http://www.facebook.com/sharer/sharer.php?u=${encodeURI(
-              window.location.href
+              locationHref
             )}&display=popup`}
           >
             Facebook
@@ -45,7 +51,7 @@ const ShareSection: React.FC<Props> = ({ contentType }) =>
           <ExternalLink
             href={`https://twitter.com/intent/tweet?text=${encodeURI(
               document.title
-            )}&url=${encodeURI(window.location.href)}`}
+            )}&url=${encodeURI(locationHref)}`}
           >
             Twitter
           </ExternalLink>

@@ -83,7 +83,7 @@ async function createEventPages(createPage, events) {
   await Promise.all(eventPageCreations);
 
   const ITEM_TYPE = 'events';
-  const EVENTS_PER_NAVIGATION_PAGE = 10;
+  const EVENTS_PER_NAVIGATION_PAGE = 12;
 
   const totalNavigationPages = Math.ceil(
     events.length / EVENTS_PER_NAVIGATION_PAGE
@@ -175,7 +175,7 @@ function createSermonPages(createPage, sermons) {
   );
 
   const ITEM_TYPE = 'sermons';
-  const SERMONS_PER_NAVIGATION_PAGE = 10;
+  const SERMONS_PER_NAVIGATION_PAGE = 12;
 
   const totalNavigationPages = Math.ceil(
     sermons.length / SERMONS_PER_NAVIGATION_PAGE

@@ -13,7 +13,7 @@ module.exports = {
         short_name: 'CCoS',
         start_url: '/',
         theme_color: '#007ea9',
-        // icon: 'src/images/gatsby-icon.png', // This path is relative to the root of the site.
+        icon: 'src/images/favicon.png',
       },
     },
     'gatsby-plugin-react-helmet',

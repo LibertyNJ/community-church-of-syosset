@@ -38,6 +38,12 @@ const SEO: React.FC<Props> = ({
   const metaDescription =
     description || data.contentfulJsonObject.json.siteMetadata.description;
 
+  let locationHref: string | undefined;
+
+  if (typeof window !== 'undefined') {
+    locationHref = window.location.href;
+  }
+
   return (
     <Helmet
       htmlAttributes={{
@@ -64,7 +70,7 @@ const SEO: React.FC<Props> = ({
         },
         {
           property: 'og:url',
-          content: window?.location.href,
+          content: locationHref,
         },
         // {
         //   property: 'og:image',

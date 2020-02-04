@@ -131,7 +131,7 @@ const NavDropdown: React.FC<Props> = ({
   const [childIsActive, setChildIsActive] = useState(false);
 
   useEffect(() => getAndSetChildIsActive(setChildIsActive, id), []);
-  useEffect(() => getAndSetListHeight(setListHeight, id), []);
+  useEffect(() => setListHeightAndlistenForWindowResize(setListHeight, id), []);
 
   return (
     <ListItem className={className}>
@@ -173,25 +173,11 @@ function getAndSetChildIsActive(
   setChildIsActive: React.Dispatch<React.SetStateAction<boolean>>,
   id: string
 ) {
-  const listElement = document?.querySelector(`#${id}`);
+  const listElement = document.querySelector(`#${id}`);
   const activeChild = listElement?.querySelector('.active');
 
   if (activeChild) {
     setChildIsActive(true);
-  }
-}
-
-function getAndSetListHeight(
-  setListHeight: React.Dispatch<React.SetStateAction<number>>,
-  id: string
-) {
-  const listElement = document?.querySelector(`#${id}`);
-  const numberOfListItems = listElement?.children.length;
-  const listItemHeight: number | undefined =
-    listElement?.children[0].offsetHeight;
-
-  if (numberOfListItems && listItemHeight) {
-    setListHeight(numberOfListItems * listItemHeight);
   }
 }
 
@@ -218,4 +204,33 @@ function hideDropdownList(
   setTimeout(() => {
     setDropdownIsHiding(false);
   }, TRANSITION_DURATION);
+}
+
+function setListHeightAndlistenForWindowResize(
+  setListHeight: React.Dispatch<React.SetStateAction<number>>,
+  id: string
+) {
+  getAndSetListHeight(setListHeight, id);
+
+  const handleWindowResize = () => {
+    getAndSetListHeight(setListHeight, id);
+  };
+
+  window.addEventListener('resize', handleWindowResize);
+
+  return () => window.removeEventListener('resize', handleWindowResize);
+}
+
+function getAndSetListHeight(
+  setListHeight: React.Dispatch<React.SetStateAction<number>>,
+  id: string
+) {
+  const listElement = document?.querySelector(`#${id}`);
+  const numberOfListItems = listElement?.children.length;
+  const listItemHeight: number | undefined =
+    listElement?.children[0].offsetHeight;
+
+  if (numberOfListItems && listItemHeight) {
+    setListHeight(numberOfListItems * listItemHeight);
+  }
 }
