@@ -64,7 +64,7 @@ const SEO: React.FC<Props> = ({
         },
         {
           property: 'og:url',
-          content: window.location.href,
+          content: location.href,
         },
         // {
         //   property: 'og:image',

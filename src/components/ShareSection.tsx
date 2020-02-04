@@ -30,7 +30,7 @@ const ShareSection: React.FC<Props> = ({ contentType }) => (
         />
         <ExternalLink
           href={`http://www.facebook.com/sharer/sharer.php?u=${encodeURI(
-            window.location.href
+            location.href
           )}&display=popup`}
         >
           Facebook
@@ -43,8 +43,8 @@ const ShareSection: React.FC<Props> = ({ contentType }) => (
         />
         <ExternalLink
           href={`https://twitter.com/intent/tweet?text=${encodeURI(
-            window.document.title
-          )}&url=${encodeURI(window.location.href)}`}
+            document.title
+          )}&url=${encodeURI(location.href)}`}
         >
           Twitter
         </ExternalLink>
