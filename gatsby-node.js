@@ -1,11 +1,23 @@
+const axios = require('axios');
 const path = require('path');
 
 exports.createPages = async ({ actions: { createPage }, graphql }) => {
   const result = await graphql(`
     {
-      allContentfulEvent {
+      allContentfulEvent(filter: {date: {gt: "${new Date().toISOString()}"}}, sort: {fields: date, order: ASC}) {
         edges {
+          next {
+            slug
+          }
           node {
+            id
+            location {
+              lat
+              lon
+            }
+            slug
+          }
+          previous {
             slug
           }
         }
@@ -13,13 +25,21 @@ exports.createPages = async ({ actions: { createPage }, graphql }) => {
       allContentfulPerson {
         edges {
           node {
+            id
             slug
           }
         }
       }
-      allContentfulSermon {
+      allContentfulSermon(sort: {fields: date, order: DESC}) {
         edges {
+          next {
+            slug
+          }
           node {
+            id
+            slug
+          }
+          previous {
             slug
           }
         }
@@ -27,33 +47,172 @@ exports.createPages = async ({ actions: { createPage }, graphql }) => {
     }
   `);
 
-  result.data.allContentfulEvent.edges.forEach(({ node }) => {
-    createPage({
-      component: path.resolve('./src/templates/event.jsx'),
-      context: {
-        slug: node.slug,
-      },
-      path: `events/${node.slug}`,
-    });
-  });
+  const events = result.data.allContentfulEvent.edges;
+  await createEventPages(createPage, events);
 
-  result.data.allContentfulPerson.edges.forEach(({ node }) => {
-    createPage({
-      component: path.resolve('./src/templates/person.jsx'),
-      context: {
-        slug: node.slug,
-      },
-      path: `people/${node.slug}`,
-    });
-  });
+  const people = result.data.allContentfulPerson.edges;
+  createPersonPages(createPage, people);
 
-  result.data.allContentfulSermon.edges.forEach(({ node }) => {
-    createPage({
-      component: path.resolve('./src/templates/sermon.jsx'),
-      context: {
-        slug: node.slug,
-      },
-      path: `sermons/${node.slug}`,
-    });
-  });
+  const sermons = result.data.allContentfulSermon.edges;
+  createSermonPages(createPage, sermons);
 };
+
+async function createEventPages(createPage, events) {
+  const geocodeDataCache = new Object();
+
+  const eventPageCreations = events.map(async event => {
+    const coordinates = `${event.node.location.lat},${event.node.location.lon}`;
+
+    if (!geocodeDataCache.hasOwnProperty(coordinates)) {
+      geocodeDataCache[coordinates] = await getGeocodeData(coordinates);
+    }
+
+    createPage({
+      component: path.resolve('./src/templates/event.tsx'),
+      context: {
+        address: geocodeDataCache[coordinates].address,
+        id: event.node.id,
+        nextSlug: event.next && event.next.slug,
+        placeId: geocodeDataCache[coordinates].placeId,
+        prevSlug: event.previous && event.previous.slug,
+      },
+      path: `/events/${event.node.slug}`,
+    });
+  });
+
+  await Promise.all(eventPageCreations);
+
+  const ITEM_TYPE = 'events';
+  const EVENTS_PER_NAVIGATION_PAGE = 10;
+
+  const totalNavigationPages = Math.ceil(
+    events.length / EVENTS_PER_NAVIGATION_PAGE
+  );
+
+  createPage({
+    component: path.resolve('./src/templates/events.tsx'),
+    context: {
+      limit: EVENTS_PER_NAVIGATION_PAGE,
+      pageIsIndex: true,
+      pageNumber: 1,
+      totalPages: totalNavigationPages,
+    },
+    path: '/events',
+  });
+
+  if (totalNavigationPages > 1) {
+    createNavigationPages(
+      createPage,
+      totalNavigationPages,
+      ITEM_TYPE,
+      EVENTS_PER_NAVIGATION_PAGE
+    );
+  }
+}
+
+async function getGeocodeData(coordinates) {
+  try {
+    const response = await axios.get(
+      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coordinates}&key=${process.env.GOOGLE_GEOCODING_API_KEY}`
+    );
+
+    return {
+      address: createAddress(response.data.results[0].address_components),
+      placeId: response.data.results[0].place_id,
+    };
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+function createAddress(addressComponents) {
+  const city = addressComponents.find(addressComponent =>
+    addressComponent.types.includes('locality')
+  ).long_name;
+
+  const number = addressComponents.find(addressComponent =>
+    addressComponent.types.includes('street_number')
+  ).short_name;
+
+  const state = addressComponents.find(addressComponent =>
+    addressComponent.types.includes('administrative_area_level_1')
+  ).short_name;
+
+  const street = addressComponents.find(addressComponent =>
+    addressComponent.types.includes('route')
+  ).long_name;
+
+  const zip = addressComponents.find(addressComponent =>
+    addressComponent.types.includes('postal_code')
+  ).short_name;
+
+  return { city, number, state, street, zip };
+}
+
+function createPersonPages(createPage, people) {
+  people.forEach(person =>
+    createPage({
+      component: path.resolve('./src/templates/person.tsx'),
+      context: {
+        id: person.node.id,
+      },
+      path: `/people/${person.node.slug}`,
+    })
+  );
+}
+
+function createSermonPages(createPage, sermons) {
+  sermons.forEach(sermon =>
+    createPage({
+      component: path.resolve('./src/templates/sermon.tsx'),
+      context: {
+        id: sermon.node.id,
+        nextSlug: sermon.next && sermon.next.slug,
+        prevSlug: sermon.previous && sermon.previous.slug,
+      },
+      path: `/sermons/${sermon.node.slug}`,
+    })
+  );
+
+  const ITEM_TYPE = 'sermons';
+  const SERMONS_PER_NAVIGATION_PAGE = 10;
+
+  const totalNavigationPages = Math.ceil(
+    sermons.length / SERMONS_PER_NAVIGATION_PAGE
+  );
+
+  createPage({
+    component: path.resolve('./src/templates/sermons.tsx'),
+    context: {
+      limit: SERMONS_PER_NAVIGATION_PAGE,
+      pageIsIndex: true,
+      pageNumber: 1,
+      totalPages: totalNavigationPages,
+    },
+    path: '/sermons',
+  });
+
+  if (totalNavigationPages > 1) {
+    createNavigationPages(
+      createPage,
+      totalNavigationPages,
+      ITEM_TYPE,
+      SERMONS_PER_NAVIGATION_PAGE
+    );
+  }
+}
+
+function createNavigationPages(createPage, totalPages, itemType, itemsPerPage) {
+  for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
+    createPage({
+      component: path.resolve(`./src/templates/${itemType}.tsx`),
+      context: {
+        limit: itemsPerPage,
+        pageNumber,
+        skip: (pageNumber - 1) * itemsPerPage,
+        totalPages,
+      },
+      path: `/${itemType}/page/${pageNumber}`,
+    });
+  }
+}

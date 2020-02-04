@@ -1,0 +1,91 @@
+import React from 'react';
+import styled from 'styled-components';
+
+import EmbeddedGoogleMap from '../components/EmbeddedGoogleMap';
+import Layout from '../components/Layout';
+import Lead from '../components/Lead';
+import LinkButton from '../components/LinkButton';
+import SEO from '../components/SEO';
+import { baseline } from '../style';
+
+const Container = styled.div`
+  margin: 0 auto;
+  max-width: 33em;
+`;
+
+const StyledEmbeddedGoogleMap = styled(EmbeddedGoogleMap)`
+  border-radius: ${baseline};
+  margin: calc(6 * ${baseline}) 0;
+  width: 100%;
+`;
+
+const StyledLinkButton = styled(LinkButton)`
+  margin-bottom: calc(6 * ${baseline});
+`;
+
+const VisitPage: React.FC = () => (
+  <>
+    <SEO title="Visit" />
+    <Layout>
+      <h1>Visit</h1>
+      <Container>
+        <Lead>
+          Our congregation is diverse, yet intimate; our service traditional,
+          yet interactive.
+        </Lead>
+        <section>
+          <h2>Worship service</h2>
+          <p>
+            Sundays at <time dateTime="10:00">10:00 AM</time>.
+          </p>
+          <p>
+            Our hour-long worship service features hymnody, anthems sung by the
+            chancel choir, a children’s sermon, scripture lessons, biblical
+            preaching, and more. Prayer requests are welcomed from all in
+            attendance. In our tradition, all baptized members of the Christian
+            family are invited to receive communion on the first Sunday of each
+            month.
+          </p>
+          <p>
+            Worship is a time of renewal and refreshment. After the service we
+            share fellowship with food and refreshment, and take an opportunity
+            to build our friendships.
+          </p>
+          <p>
+            Church school is held during the worship service, which is
+            appropriate for children of all ages.
+          </p>
+        </section>
+        <section>
+          <h2>Location</h2>
+          {process.env.GATSBY_GOOGLE_MAPS_EMBED_API_KEY && (
+            <StyledEmbeddedGoogleMap
+              apiKey={process.env.GATSBY_GOOGLE_MAPS_EMBED_API_KEY}
+              aspectRatio={{ x: 1, y: 1 }}
+              mode="place"
+              q={'Community Church of Syosset'}
+              title="A map of the Community Church of Syosset’s location"
+            />
+          )}
+          <address>
+            <p>
+              <b>Community Church of Syosset</b> <br />
+              36 Church Street <br />
+              Syosset, NY 11791
+            </p>
+          </address>
+        </section>
+        <section>
+          <h2>Let us know you’re coming</h2>
+          <p>
+            We’re looking forward to meeting you! Drop us a note and our
+            greeters will be ready to welcome you on your first visit.
+          </p>
+          <StyledLinkButton to="/contact">Contact us</StyledLinkButton>
+        </section>
+      </Container>
+    </Layout>
+  </>
+);
+
+export default VisitPage;

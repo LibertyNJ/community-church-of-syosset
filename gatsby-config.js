@@ -1,12 +1,8 @@
-require('dotenv').config();
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`,
+});
 
 module.exports = {
-  siteMetadata: {
-    author: 'Nathaniel J. Liberty',
-    description:
-      'An open and affirming congregation of the United Church of Christ in Syosset, New York. No matter who you are, or where you are on life’s journey, you are welcome here!',
-    title: 'Community Church of Syosset',
-  },
   plugins: [
     {
       resolve: 'gatsby-plugin-manifest',
@@ -16,12 +12,14 @@ module.exports = {
         name: 'Community Church of Syosset',
         short_name: 'CCoS',
         start_url: '/',
-        theme_color: '#fff',
+        theme_color: '#007ea9',
         // icon: 'src/images/gatsby-icon.png', // This path is relative to the root of the site.
       },
     },
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-sharp',
+    'gatsby-plugin-styled-components',
+    'gatsby-plugin-typescript',
     {
       resolve: 'gatsby-source-contentful',
       options: {
@@ -34,4 +32,7 @@ module.exports = {
     // To learn more, visit: https://gatsby.dev/offline
     // 'gatsby-plugin-offline',
   ],
+  siteMetadata: {
+    author: 'Nathaniel J. Liberty',
+  },
 };

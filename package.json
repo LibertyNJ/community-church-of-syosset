@@ -6,23 +6,40 @@
   "author": "Nathaniel J. Liberty <nathaniel.liberty@gmail.com>",
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^13.4.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.26",
+    "@fortawesome/free-brands-svg-icons": "^5.12.0",
+    "@fortawesome/free-regular-svg-icons": "^5.12.0",
+    "@fortawesome/free-solid-svg-icons": "^5.12.0",
+    "@fortawesome/react-fontawesome": "^0.1.8",
+    "axios": "^0.19.2",
+    "babel-plugin-styled-components": "^1.10.6",
     "gatsby": "^2.18.17",
+    "gatsby-background-image": "^0.9.12",
     "gatsby-image": "^2.2.34",
     "gatsby-plugin-manifest": "^2.2.30",
     "gatsby-plugin-offline": "^3.0.24",
     "gatsby-plugin-react-helmet": "^3.1.16",
     "gatsby-plugin-sharp": "^2.3.4",
+    "gatsby-plugin-styled-components": "^3.1.17",
+    "gatsby-plugin-typescript": "^2.1.26",
     "gatsby-source-contentful": "^2.1.73",
-    "gatsby-source-filesystem": "^2.1.39",
     "gatsby-transformer-sharp": "^2.3.6",
-    "prop-types": "^15.7.2",
+    "intersection-observer": "^0.7.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-helmet": "^5.2.1"
+    "react-helmet": "^5.2.1",
+    "styled-components": "^4.4.1",
+    "styled-normalize": "^8.0.6"
   },
   "devDependencies": {
+    "@types/node": "^13.1.6",
+    "@types/react": "^16.9.17",
+    "@types/react-dom": "^16.9.4",
+    "@types/react-helmet": "^5.0.15",
+    "@types/styled-components": "^4.4.2",
     "dotenv": "^8.2.0",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "typescript": "^3.7.4"
   },
   "license": "UNLICENSED",
   "scripts": {
@@ -32,6 +49,7 @@
     "start": "npm run develop",
     "serve": "gatsby serve -H 0.0.0.0 -o",
     "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
+    "type-check": "tsc --noEmit"
   }
 }
