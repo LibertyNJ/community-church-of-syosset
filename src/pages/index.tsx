@@ -53,7 +53,7 @@ const StyledLinkButton = styled(LinkButton)`
 `;
 
 type Data = {
-  contentfulAsset: {
+  contentfulAsset?: {
     fluid: FluidObject;
   };
 };
@@ -69,10 +69,12 @@ const HomePage: React.FC = () => {
     }
   `);
 
-  const backgroundImageStack = [
-    'linear-gradient(rgba(0, 191, 255, 0.65), rgba(0, 191, 255, 0.65))',
-    data.contentfulAsset.fluid,
-  ];
+  const backgroundImageStack = data.contentfulAsset
+    ? [
+        'linear-gradient(rgba(0, 191, 255, 0.65), rgba(0, 191, 255, 0.65))',
+        data.contentfulAsset.fluid,
+      ]
+    : 'linear-gradient(rgba(0, 191, 255, 1), rgba(0, 191, 255, 1))';
 
   return (
     <>

@@ -39,7 +39,7 @@ const StyledHeader = styled(Header)`
 `;
 
 type Props = {
-  backgroundImage?: IFluidObject | IFluidObject[] | (string | IFluidObject)[];
+  backgroundImage?: IFluidObject | string | (IFluidObject | string)[];
   bodyDisplay?: string;
   children: React.ReactNode;
   className?: string;

@@ -41,7 +41,7 @@ const StyledBackgroundImage = styled(BackgroundImage)`
 `;
 
 type Props = {
-  backgroundImage?: IFluidObject | IFluidObject[] | (string | IFluidObject)[];
+  backgroundImage?: IFluidObject | string | (IFluidObject | string)[];
   children: React.ReactNode;
   className?: string;
   display?: string;

@@ -1,4 +1,5 @@
 import { graphql, useStaticQuery } from 'gatsby';
+import { FluidObject } from 'gatsby-image';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -20,8 +21,14 @@ const StyledLinkButton = styled(LinkButton)`
   margin-bottom: calc(6 * ${baseline});
 `;
 
+type Data = {
+  contentfulAsset?: {
+    fluid: FluidObject;
+  };
+};
+
 const ContactSuccessPage: React.FC = () => {
-  const data = useStaticQuery(graphql`
+  const data = useStaticQuery<Data>(graphql`
     query ContactSuccessPage {
       contentfulAsset(title: { eq: "Contact Success Page Background Image" }) {
         fluid {
@@ -31,16 +38,17 @@ const ContactSuccessPage: React.FC = () => {
     }
   `);
 
+  const backgroundImageStack = data.contentfulAsset
+    ? [
+        'linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75))',
+        data.contentfulAsset.fluid,
+      ]
+    : undefined;
+
   return (
     <>
       <SEO title="Thank you" />
-      <Layout
-        backgroundImage={[
-          'linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75))',
-          data.contentfulAsset.fluid,
-        ]}
-        bodyDisplay="flex"
-      >
+      <Layout backgroundImage={backgroundImageStack} bodyDisplay="flex">
         <Container>
           <h1>Thank you</h1>
           <Lead>Thank you for reaching out to us.</Lead>

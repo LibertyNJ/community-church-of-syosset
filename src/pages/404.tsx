@@ -39,7 +39,7 @@ const StyledLinkButton = styled(LinkButton)`
 `;
 
 type Data = {
-  contentfulAsset: {
+  contentfulAsset?: {
     fluid: FluidObject;
   };
 };
@@ -55,10 +55,12 @@ const Error404Page: React.FC = () => {
     }
   `);
 
-  const backgroundImageStack = [
-    'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))',
-    data.contentfulAsset.fluid,
-  ];
+  const backgroundImageStack = data.contentfulAsset
+    ? [
+        'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))',
+        data.contentfulAsset.fluid,
+      ]
+    : 'linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1))';
 
   return (
     <>
