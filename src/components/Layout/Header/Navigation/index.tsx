@@ -73,7 +73,6 @@ const Navigation: React.FC<Props> = ({ className }) => {
         >
           <NavItem to="/mission">Mission</NavItem>
           <NavItem to="/nursery-school">Nursery school</NavItem>
-          <NavItem to="/prayer-list">Prayer list</NavItem>
         </NavDropdown>
         <NavDropdown
           dropdownListIsShown={activeDropdownId === 'about-dropdown'}
@@ -98,7 +97,7 @@ export default Navigation;
 function getAndSetHeaderHeight(
   setHeaderHeight: React.Dispatch<React.SetStateAction<number>>
 ) {
-  const headerElement = document?.querySelector('header');
+  const headerElement = document.querySelector('header');
 
   if (headerElement) {
     setHeaderHeight(headerElement.offsetHeight);
@@ -108,15 +107,17 @@ function getAndSetHeaderHeight(
 function listenForAndHandleDocumentClick(
   setActiveDropdownId: React.Dispatch<React.SetStateAction<string | null>>
 ) {
-  const navigation = document?.getElementById('navigation');
+  const navigation = document.getElementById('navigation');
 
-  const handleDocumentClick = event => {
-    if (!navigation?.contains(event.target)) {
-      setActiveDropdownId(null);
-    }
-  };
+  if (navigation) {
+    const handleDocumentClick = (event: MouseEvent) => {
+      if (!navigation.contains(event.target as Node)) {
+        setActiveDropdownId(null);
+      }
+    };
 
-  document?.addEventListener('click', event => handleDocumentClick(event));
+    document.addEventListener('click', handleDocumentClick);
 
-  return () => document?.removeEventListener('click', handleDocumentClick);
+    return () => document.removeEventListener('click', handleDocumentClick);
+  }
 }
