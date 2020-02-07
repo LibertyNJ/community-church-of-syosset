@@ -104,7 +104,6 @@ const StyledTitledList = styled(TitledList)`
 `;
 
 const StyledVideoPlayer = styled(VideoPlayer)`
-  background-color: ${color.body};
   border-radius: ${baseline};
   margin: calc(6 * ${baseline}) 0;
 `;
@@ -185,10 +184,7 @@ const SermonTemplate: React.FC<Props> = ({ data, pageContext }) => {
           {data.contentfulSermon.video && (
             <section>
               <h2>Video</h2>
-              <StyledVideoPlayer
-                aspectRatio={{ x: 16, y: 9 }}
-                url={data.contentfulSermon.video.file.url}
-              />
+              <StyledVideoPlayer url={data.contentfulSermon.video.file.url} />
             </section>
           )}
           {data.contentfulSermon.audio && (
@@ -208,7 +204,7 @@ const SermonTemplate: React.FC<Props> = ({ data, pageContext }) => {
             <StyledPageButtons
               nextSlug={pageContext.nextSlug}
               prevSlug={pageContext.prevSlug}
-              rootSlug="events"
+              rootSlug="sermons"
             />
           )}
         </Container>
