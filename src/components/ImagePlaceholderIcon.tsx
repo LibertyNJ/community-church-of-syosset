@@ -19,7 +19,9 @@ type IconProps = {
 };
 
 const Icon = styled(FontAwesomeIcon)<IconProps>`
-  font-size: ${props => props.fontSize};
+  && {
+    font-size: ${props => props.fontSize};
+  }
 `;
 
 type Props = {

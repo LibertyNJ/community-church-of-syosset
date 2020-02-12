@@ -71,6 +71,7 @@ const Navigation: React.FC<Props> = ({ className }) => {
           setActiveDropdownId={setActiveDropdownId}
           title="More"
         >
+          <NavItem to="/images">Images</NavItem>
           <NavItem to="/mission">Mission</NavItem>
           <NavItem to="/nursery-school">Nursery school</NavItem>
         </NavDropdown>
