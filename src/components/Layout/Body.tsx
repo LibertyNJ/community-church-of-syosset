@@ -2,6 +2,7 @@ import BackgroundImage, { IFluidObject } from 'gatsby-background-image';
 import React from 'react';
 import styled from 'styled-components';
 
+import BackgroundVideo from '../BackgroundVideo';
 import { baseline, breakpoint } from '../../style';
 
 type BreakpointContainerProps = {
@@ -30,6 +31,18 @@ const BreakpointContainer = styled.div<BreakpointContainerProps>`
   }
 `;
 
+type BackgroundVideoContainerProps = {
+  overlay?: string;
+};
+
+const BackgroundVideoContainer = styled.main<BackgroundVideoContainerProps>`
+  background-color: ${props => props.overlay};
+  display: flex;
+  padding: 0 calc(3 * ${baseline});
+  position: relative;
+  overflow: hidden;
+`;
+
 const Container = styled.main`
   display: flex;
   padding: 0 calc(3 * ${baseline});
@@ -41,7 +54,9 @@ const StyledBackgroundImage = styled(BackgroundImage)`
 `;
 
 type Props = {
-  backgroundImage?: IFluidObject | string | (IFluidObject | string)[];
+  backgroundImage?: IFluidObject | IFluidObject[] | (IFluidObject | string)[];
+  backgroundVideoOverlay?: string;
+  backgroundVideoUrl?: string;
   children: React.ReactNode;
   className?: string;
   display?: string;
@@ -49,11 +64,21 @@ type Props = {
 
 const Body: React.FC<Props> = ({
   backgroundImage,
+  backgroundVideoOverlay,
+  backgroundVideoUrl,
   children,
   className,
   display,
 }) =>
-  backgroundImage ? (
+  backgroundVideoUrl ? (
+    <BackgroundVideoContainer
+      className={className}
+      overlay={backgroundVideoOverlay}
+    >
+      <BackgroundVideo url={backgroundVideoUrl} />
+      <BreakpointContainer display={display}>{children}</BreakpointContainer>
+    </BackgroundVideoContainer>
+  ) : backgroundImage ? (
     <StyledBackgroundImage
       className={className}
       fluid={backgroundImage}

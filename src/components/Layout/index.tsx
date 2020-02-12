@@ -39,7 +39,9 @@ const StyledHeader = styled(Header)`
 `;
 
 type Props = {
-  backgroundImage?: IFluidObject | string | (IFluidObject | string)[];
+  backgroundImage?: IFluidObject | IFluidObject[] | (IFluidObject | string)[];
+  backgroundVideoOverlay?: string;
+  backgroundVideoUrl?: string;
   bodyDisplay?: string;
   children: React.ReactNode;
   className?: string;
@@ -73,6 +75,8 @@ type Data = {
 
 const Layout: React.FC<Props> = ({
   backgroundImage,
+  backgroundVideoOverlay,
+  backgroundVideoUrl,
   bodyDisplay,
   children,
   className,
@@ -110,7 +114,12 @@ const Layout: React.FC<Props> = ({
       <GlobalStyle />
       <Container className={className}>
         <StyledHeader />
-        <StyledBody backgroundImage={backgroundImage} display={bodyDisplay}>
+        <StyledBody
+          backgroundImage={backgroundImage}
+          backgroundVideoOverlay={backgroundVideoOverlay}
+          backgroundVideoUrl={backgroundVideoUrl}
+          display={bodyDisplay}
+        >
           {children}
         </StyledBody>
         <StyledFooter

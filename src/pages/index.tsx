@@ -32,7 +32,7 @@ const StyledLinkButton = styled(LinkButton)`
   flex: 1;
   margin: 0 calc(3 * ${baseline}) calc(6 * ${baseline});
   padding: calc(3 * ${baseline} - 1px);
-  transition: filter 500ms;
+  transition: background-color 500ms, color 500ms, filter 500ms;
 
   &:focus {
     filter: drop-shadow(0 0 5px ${color.black});
@@ -53,33 +53,54 @@ const StyledLinkButton = styled(LinkButton)`
 `;
 
 type Data = {
-  contentfulAsset?: {
+  backgroundImage?: {
     fluid: FluidObject;
+  };
+  backgroundVideo?: {
+    file: {
+      url: string;
+    };
   };
 };
 
 const HomePage: React.FC = () => {
   const data = useStaticQuery<Data>(graphql`
     query HomePage {
-      contentfulAsset(title: { eq: "Home Page Background Image" }) {
+      backgroundImage: contentfulAsset(
+        title: { eq: "Home Page Background Image" }
+      ) {
         fluid {
           ...GatsbyContentfulFluid
+        }
+      }
+      backgroundVideo: contentfulAsset(
+        title: { eq: "Home Page Background Video" }
+      ) {
+        file {
+          url
         }
       }
     }
   `);
 
-  const backgroundImageStack = data.contentfulAsset
+  const backgroundImageStack = data.backgroundImage
     ? [
         'linear-gradient(rgba(0, 191, 255, 0.65), rgba(0, 191, 255, 0.65))',
-        data.contentfulAsset.fluid,
+        data.backgroundImage.fluid,
       ]
-    : 'linear-gradient(rgba(0, 191, 255, 1), rgba(0, 191, 255, 1))';
+    : ['linear-gradient(rgba(0, 191, 255, 1), rgba(0, 191, 255, 1))'];
 
   return (
     <>
       <SEO title="Home" />
-      <StyledLayout backgroundImage={backgroundImageStack} bodyDisplay="flex">
+      <StyledLayout
+        backgroundImage={backgroundImageStack}
+        backgroundVideoOverlay="rgba(0, 191, 255, 0.65)"
+        backgroundVideoUrl={
+          data.backgroundVideo && data.backgroundVideo.file.url
+        }
+        bodyDisplay="flex"
+      >
         <Container>
           <h1>Community Church of&nbsp;Syosset</h1>
           <Lead>
