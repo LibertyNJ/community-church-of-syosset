@@ -47,6 +47,7 @@ const ImageGalleryCard: React.FC<Props> = ({
     <StyledLink to={`/images/${slug}`}>
       <StyledFixedImage
         image={image}
+        imageWrapperStyle={{ display: 'block' }}
         placeholderIcon="images"
         placeholderIconSize={`calc(54 * ${baseline})`}
       />

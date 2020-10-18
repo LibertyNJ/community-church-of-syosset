@@ -1,25 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import CenteredTextColumn from '../../components/CenteredTextColumn';
+import FlexContainer from '../../components/FlexContainer';
 import Layout from '../../components/Layout';
 import LinkButton from '../../components/LinkButton';
 import SEO from '../../components/SEO';
 import { baseline } from '../../style';
 
-const ButtonContainer = styled.div`
-  display: flex;
-`;
-
-const Container = styled.div`
-  margin: 0 auto;
-  max-width: 33em;
-`;
-
 const StyledLinkButton = styled(LinkButton)`
-  align-items: center;
-  display: flex;
   flex: 1;
-  justify-content: center;
   margin: 0 calc(3 * ${baseline}) calc(6 * ${baseline});
 
   &:first-child {
@@ -36,7 +26,7 @@ const AboutPage: React.FC = () => (
     <SEO title="About" />
     <Layout>
       <h1>Who we are</h1>
-      <Container>
+      <CenteredTextColumn>
         <section>
           <h2>A pilgrim people</h2>
           <p>
@@ -77,11 +67,11 @@ const AboutPage: React.FC = () => (
             orientations into every aspect of church life and ministry.
           </p>
         </section>
-        <ButtonContainer>
+        <FlexContainer>
           <StyledLinkButton to="/visit">Visit us</StyledLinkButton>
           <StyledLinkButton to="/about/belief">Our belief</StyledLinkButton>
-        </ButtonContainer>
-      </Container>
+        </FlexContainer>
+      </CenteredTextColumn>
     </Layout>
   </>
 );

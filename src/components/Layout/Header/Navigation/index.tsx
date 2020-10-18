@@ -44,12 +44,13 @@ type Props = {
 
 const Navigation: React.FC<Props> = ({ className }) => {
   const [activeDropdownId, setActiveDropdownId] = useState<string | null>(null);
-  const [headerHeight, setHeaderHeight] = useState();
+  const [headerHeight, setHeaderHeight] = useState<number>(60);
   const [navListIsHiding, setNavListIsHiding] = useState(false);
   const [navListIsShown, setNavListIsShown] = useState(false);
 
   useEffect(() => getAndSetHeaderHeight(setHeaderHeight), []);
   useEffect(() => listenForAndHandleDocumentClick(setActiveDropdownId), []);
+  useEffect(() => suppressScroll(navListIsShown), [navListIsShown]);
 
   return (
     <Nav className={className} id="navigation">
@@ -64,7 +65,7 @@ const Navigation: React.FC<Props> = ({ className }) => {
       >
         <NavItem to="/">Home</NavItem>
         <NavItem to="/events">Events</NavItem>
-        <NavItem to="/sermons">Sermons</NavItem>
+        <NavItem to="/services">Services</NavItem>
         <NavDropdown
           dropdownListIsShown={activeDropdownId === 'more-dropdown'}
           id="more-dropdown"
@@ -73,7 +74,6 @@ const Navigation: React.FC<Props> = ({ className }) => {
         >
           <NavItem to="/images">Images</NavItem>
           <NavItem to="/mission">Mission</NavItem>
-          <NavItem to="/nursery-school">Nursery school</NavItem>
         </NavDropdown>
         <NavDropdown
           dropdownListIsShown={activeDropdownId === 'about-dropdown'}
@@ -83,7 +83,7 @@ const Navigation: React.FC<Props> = ({ className }) => {
         >
           <NavItem to="/about">Who we are</NavItem>
           <NavItem to="/about/belief">What we believe</NavItem>
-          <NavItem to="/about/pastor">Our pastor</NavItem>
+          <NavItem to="/about/pastor">Pastor’s message</NavItem>
           <NavItem to="/about/team">Our team</NavItem>
         </NavDropdown>
         <NavItem to="/visit">Visit</NavItem>
@@ -120,5 +120,14 @@ function listenForAndHandleDocumentClick(
     document.addEventListener('click', handleDocumentClick);
 
     return () => document.removeEventListener('click', handleDocumentClick);
+  }
+}
+
+function suppressScroll(navListIsShown: boolean) {
+  const body = document.querySelector('body');
+
+  if (navListIsShown && body !== null) {
+    body.classList.add('hide-overflow');
+    return () => body.classList.remove('hide-overflow');
   }
 }

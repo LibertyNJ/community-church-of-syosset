@@ -60,7 +60,7 @@ type Props = {
   title: string;
 };
 
-const SermonCard: React.FC<Props> = ({
+const ServiceCard: React.FC<Props> = ({
   className,
   date,
   image,
@@ -76,9 +76,10 @@ const SermonCard: React.FC<Props> = ({
 
   return (
     <Card className={className}>
-      <StyledLink to={`/sermons/${slug}`}>
+      <StyledLink to={`/services/${slug}`}>
         <StyledFixedImage
           image={image}
+          imageWrapperStyle={{ display: 'block' }}
           placeholderIcon="bible"
           placeholderIconSize={`calc(12 * ${baseline})`}
         />
@@ -94,4 +95,4 @@ const SermonCard: React.FC<Props> = ({
   );
 };
 
-export default SermonCard;
+export default ServiceCard;

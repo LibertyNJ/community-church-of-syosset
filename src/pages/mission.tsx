@@ -3,15 +3,16 @@ import { FixedObject } from 'gatsby-image';
 import React from 'react';
 import styled from 'styled-components';
 
+import CenteredTextColumn from '../components/CenteredTextColumn';
 import Layout from '../components/Layout';
 import Lead from '../components/Lead';
 import MissionCardList from '../components/MissionCardList';
 import SEO from '../components/SEO';
-import { baseline, breakpoint } from '../style';
+import { baseline } from '../style';
 
-const Container = styled.div`
-  margin: 0 auto;
-  max-width: 33em;
+const NoMissionsNotice = styled(Lead)`
+  font-weight: bold;
+  text-align: center;
 `;
 
 const StyledMissionCardList = styled(MissionCardList)`
@@ -62,7 +63,7 @@ const MissionPage: React.FC = () => {
       <SEO title="Mission" />
       <Layout>
         <h1>Mission</h1>
-        <Container>
+        <CenteredTextColumn>
           <Lead>
             We are called to care for our local community and the world.
           </Lead>
@@ -73,8 +74,15 @@ const MissionPage: React.FC = () => {
             mission work that is brought to our attention each year.
           </p>
           <p>Click on a mission to learn more about it.</p>
-        </Container>
-        <StyledMissionCardList missions={missions} />
+        </CenteredTextColumn>
+        {missions.length > 0 ? (
+          <StyledMissionCardList missions={missions} />
+        ) : (
+          <NoMissionsNotice>
+            No missions listed… <br />
+            Check back soon!
+          </NoMissionsNotice>
+        )}
       </Layout>
     </>
   );

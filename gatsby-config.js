@@ -1,6 +1,4 @@
-require('dotenv').config({
-  path: `.env.${process.env.NODE_ENV}`,
-});
+require('dotenv').config();
 
 module.exports = {
   plugins: [
@@ -24,6 +22,8 @@ module.exports = {
       resolve: 'gatsby-source-contentful',
       options: {
         accessToken: process.env.CONTENTFUL_CONTENT_DELIVERY_API_ACCESS_TOKEN,
+        environment:
+          process.env.NODE_ENV === 'development' ? 'development' : 'master',
         spaceId: process.env.CONTENTFUL_SPACE_ID,
       },
     },

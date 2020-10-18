@@ -44,7 +44,7 @@ module.exports = async ({ actions: { createPage }, graphql }) => {
           }
         }
       }
-      allContentfulSermon(sort: {fields: date, order: DESC}) {
+      allContentfulService(sort: {fields: date, order: DESC}) {
         edges {
           next {
             slug
@@ -70,8 +70,8 @@ module.exports = async ({ actions: { createPage }, graphql }) => {
   const people = result.data.allContentfulPerson.edges;
   createPersonPages(createPage, people);
 
-  const sermons = result.data.allContentfulSermon.edges;
-  createSermonPages(createPage, sermons);
+  const services = result.data.allContentfulService.edges;
+  createServicePages(createPage, services);
 };
 
 async function createEventPages(createPage, events) {
@@ -143,8 +143,10 @@ async function getGeocodeData(coordinates) {
 }
 
 function createAddress(addressComponents) {
-  const city = addressComponents.find(addressComponent =>
-    addressComponent.types.includes('locality')
+  const city = addressComponents.find(
+    addressComponent =>
+      addressComponent.types.includes('locality') ||
+      addressComponent.types.includes('sublocality')
   ).long_name;
 
   const number = addressComponents.find(addressComponent =>
@@ -219,35 +221,35 @@ function createPersonPages(createPage, people) {
   );
 }
 
-function createSermonPages(createPage, sermons) {
-  sermons.forEach(sermon =>
+function createServicePages(createPage, services) {
+  services.forEach(service =>
     createPage({
-      component: path.resolve('./src/templates/sermon.tsx'),
+      component: path.resolve('./src/templates/service.tsx'),
       context: {
-        id: sermon.node.id,
-        nextSlug: sermon.next && sermon.next.slug,
-        prevSlug: sermon.previous && sermon.previous.slug,
+        id: service.node.id,
+        nextSlug: service.next && service.next.slug,
+        prevSlug: service.previous && service.previous.slug,
       },
-      path: `/sermons/${sermon.node.slug}`,
+      path: `/services/${service.node.slug}`,
     })
   );
 
-  const ITEM_TYPE = 'sermons';
-  const SERMONS_PER_NAVIGATION_PAGE = 12;
+  const ITEM_TYPE = 'services';
+  const SERVICES_PER_NAVIGATION_PAGE = 12;
 
   const totalNavigationPages = Math.ceil(
-    sermons.length / SERMONS_PER_NAVIGATION_PAGE
+    services.length / SERVICES_PER_NAVIGATION_PAGE
   );
 
   createPage({
-    component: path.resolve('./src/templates/sermons.tsx'),
+    component: path.resolve('./src/templates/services.tsx'),
     context: {
-      limit: SERMONS_PER_NAVIGATION_PAGE,
+      limit: SERVICES_PER_NAVIGATION_PAGE,
       pageIsIndex: true,
       pageNumber: 1,
       totalPages: totalNavigationPages,
     },
-    path: '/sermons',
+    path: '/services',
   });
 
   if (totalNavigationPages > 1) {
@@ -255,7 +257,7 @@ function createSermonPages(createPage, sermons) {
       createPage,
       totalNavigationPages,
       ITEM_TYPE,
-      SERMONS_PER_NAVIGATION_PAGE
+      SERVICES_PER_NAVIGATION_PAGE
     );
   }
 }

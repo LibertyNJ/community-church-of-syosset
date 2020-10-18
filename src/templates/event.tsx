@@ -4,6 +4,7 @@ import { graphql } from 'gatsby';
 import React from 'react';
 import styled from 'styled-components';
 
+import CenteredTextColumn from '../components/CenteredTextColumn';
 import EmbeddedGoogleMap from '../components/EmbeddedGoogleMap';
 import Layout from '../components/Layout';
 import PageButtons from '../components/PageButtons';
@@ -35,11 +36,6 @@ const TIME_FORMAT_OPTIONS = {
   minute: '2-digit',
   timeZoneName: 'short',
 };
-
-const Container = styled.div`
-  margin: 0 auto;
-  max-width: 33em;
-`;
 
 const StyledEmbeddedGoogleMap = styled(EmbeddedGoogleMap)`
   background-color: ${color.body};
@@ -92,7 +88,7 @@ const EventTemplate: React.FC<Props> = ({ data, pageContext }) => {
     <>
       <SEO title={data.contentfulEvent.title} />
       <Layout>
-        <Container>
+        <CenteredTextColumn>
           <h1>{data.contentfulEvent.title}</h1>
           <section>
             <h2>Date and time</h2>
@@ -136,7 +132,7 @@ const EventTemplate: React.FC<Props> = ({ data, pageContext }) => {
               rootSlug="events"
             />
           )}
-        </Container>
+        </CenteredTextColumn>
       </Layout>
     </>
   );

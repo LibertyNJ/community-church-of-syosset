@@ -1,34 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import CenteredTextColumn from '../../components/CenteredTextColumn';
 import Layout from '../../components/Layout';
 import LinkButton from '../../components/LinkButton';
 import SEO from '../../components/SEO';
 import { baseline } from '../../style';
 
-const ButtonContainer = styled.div`
-  display: flex;
-`;
-
-const Container = styled.div`
-  margin: 0 auto;
-  max-width: 33em;
-`;
-
 const StyledLinkButton = styled(LinkButton)`
-  align-items: center;
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  margin: 0 calc(3 * ${baseline}) calc(6 * ${baseline});
-
-  &:first-child {
-    margin-left: 0;
-  }
-
-  &:last-child {
-    margin-right: 0;
-  }
+  margin-bottom: calc(6 * ${baseline});
 `;
 
 const BeliefPage: React.FC = () => (
@@ -36,7 +16,7 @@ const BeliefPage: React.FC = () => (
     <SEO title="Belief" />
     <Layout>
       <h1>What we believe</h1>
-      <Container>
+      <CenteredTextColumn>
         <section>
           <h2>
             The United Church&nbsp;of&nbsp;Christ Statement&nbsp;of&nbsp;Faith
@@ -82,11 +62,8 @@ const BeliefPage: React.FC = () => (
           <p>Blessing and honor, glory and power be unto God.</p>
           <p>Amen.</p>
         </section>
-        <ButtonContainer>
-          <StyledLinkButton to="/visit">Visit us</StyledLinkButton>
-          <StyledLinkButton to="/about/pastor">Our pastor</StyledLinkButton>
-        </ButtonContainer>
-      </Container>
+        <StyledLinkButton to="/visit">Visit us</StyledLinkButton>
+      </CenteredTextColumn>
     </Layout>
   </>
 );

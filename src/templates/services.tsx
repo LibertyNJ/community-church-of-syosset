@@ -3,16 +3,17 @@ import { FixedObject } from 'gatsby-image';
 import React from 'react';
 import styled from 'styled-components';
 
+import CenteredTextColumn from '../components/CenteredTextColumn';
 import Layout from '../components/Layout';
 import Lead from '../components/Lead';
 import Pagination from '../components/Pagination';
 import SEO from '../components/SEO';
-import SermonCardList from '../components/SermonCardList';
+import ServiceCardList from '../components/ServiceCardList';
 import { baseline, breakpoint } from '../style';
 
 export const query = graphql`
-  query SermonsPageTemplate($limit: Int!, $skip: Int) {
-    allContentfulSermon(
+  query ServicesPageTemplate($limit: Int!, $skip: Int) {
+    allContentfulService(
       limit: $limit
       skip: $skip
       sort: { fields: date, order: DESC }
@@ -38,20 +39,16 @@ export const query = graphql`
   }
 `;
 
-const Container = styled.div`
-  margin: 0 auto;
-  max-width: 33em;
-`;
-
-const NoSermonsNotice = styled.p`
+const NoServicesNotice = styled(Lead)`
   font-weight: bold;
+  text-align: center;
 `;
 
 const StyledPagination = styled(Pagination)`
   margin-bottom: calc(6 * ${baseline});
 `;
 
-const StyledSermonCardList = styled(SermonCardList)`
+const StyledServiceCardList = styled(ServiceCardList)`
   @media (min-width: ${breakpoint.md}) {
     display: grid;
     gap: calc(6 * ${baseline});
@@ -65,7 +62,7 @@ const StyledSermonCardList = styled(SermonCardList)`
 
 type Props = {
   data: {
-    allContentfulSermon: {
+    allContentfulService: {
       edges: {
         node: {
           date: string;
@@ -90,48 +87,51 @@ type Props = {
   };
 };
 
-const SermonsPageTemplate: React.FC<Props> = ({ data, pageContext }) => {
-  const sermons = data.allContentfulSermon.edges.map(({ node }) => node);
+const ServicesPageTemplate: React.FC<Props> = ({ data, pageContext }) => {
+  const services = data.allContentfulService.edges.map(({ node }) => node);
 
   return (
     <>
       <SEO
         title={
           pageContext.pageIsIndex
-            ? 'Sermons'
-            : `Sermons: Page ${pageContext.pageNumber}`
+            ? 'Services'
+            : `Services: Page ${pageContext.pageNumber}`
         }
       />
       <Layout>
-        <h1>Sermons</h1>
-        <Container>
+        <h1>Services</h1>
+        <CenteredTextColumn>
           {pageContext.pageIsIndex ? (
             <p>
-              Did you miss a Sunday, or want to hear what our pastor and guest
-              preachers have to say?
+              Miss a Sunday? Want to hear what our pastor and guest preachers
+              have to say?
             </p>
           ) : (
             <Lead>Page {pageContext.pageNumber}</Lead>
           )}
-          <p>Click on a sermon for details.</p>
-        </Container>
-        {sermons.length ? (
-          <StyledSermonCardList sermons={sermons} />
+          <p>Click on a past service to watch it and learn more.</p>
+        </CenteredTextColumn>
+        {services.length ? (
+          <StyledServiceCardList services={services} />
         ) : (
-          <NoSermonsNotice>No sermons available!</NoSermonsNotice>
+          <NoServicesNotice>
+            No services available… <br />
+            Check back soon!
+          </NoServicesNotice>
         )}
         {pageContext.totalPages > 1 && (
-          <Container>
+          <CenteredTextColumn>
             <StyledPagination
               lastPageNumber={pageContext.totalPages}
               pageNumber={pageContext.pageNumber}
-              urlRoot="sermons"
+              urlRoot="services"
             />
-          </Container>
+          </CenteredTextColumn>
         )}
       </Layout>
     </>
   );
 };
 
-export default SermonsPageTemplate;
+export default ServicesPageTemplate;

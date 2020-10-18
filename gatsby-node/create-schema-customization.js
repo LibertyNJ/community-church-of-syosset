@@ -146,7 +146,7 @@ module.exports = ({ actions: { createTypes } }) => {
       role: String!
       slug: String!
       image: ContentfulAsset @link(by: "id", from: "image___NODE")
-      sermon: [ContentfulSermon] @link(by: "id", from: "sermon___NODE")
+      service: [ContentfulService] @link(by: "id", from: "service___NODE")
       biography: contentfulPersonBiographyRichTextNode @link(by: "id", from: "biography___NODE")
       spaceId: String
       contentful_id: String
@@ -157,50 +157,32 @@ module.exports = ({ actions: { createTypes } }) => {
       content_list: [ContentfulContentList] @link(by: "id", from: "content list___NODE") @proxy(from: "content list___NODE")
     }
     
-    type ContentfulSermon implements Node @derivedTypes @dontInfer {
+    type ContentfulService implements Node @derivedTypes @dontInfer {
       title: String!
       date: Date! @dateformat
       scriptureReadings: [String!]!
       slug: String!
       image: ContentfulAsset @link(by: "id", from: "image___NODE")
       preacher: ContentfulPerson! @link(by: "id", from: "preacher___NODE")
-      video: ContentfulAsset @link(by: "id", from: "video___NODE")
-      audio: ContentfulAsset @link(by: "id", from: "audio___NODE")
-      transcript: contentfulSermonTranscriptRichTextNode @link(by: "id", from: "transcript___NODE")
+      videoUrl: String!
       spaceId: String
       contentful_id: String
       createdAt: Date @dateformat
       updatedAt: Date @dateformat
-      sys: ContentfulSermonSys
+      sys: ContentfulServiceSys
       node_locale: String
     }
     
-    type contentfulSermonTranscriptRichTextNode implements Node @derivedTypes @dontInfer {
-      content: [contentfulSermonTranscriptRichTextNodeContent]
-      nodeType: String
-      transcript: String
-    }
-    
-    type contentfulSermonTranscriptRichTextNodeContent @derivedTypes {
-      content: [contentfulSermonTranscriptRichTextNodeContentContent]
-      nodeType: String
-    }
-    
-    type contentfulSermonTranscriptRichTextNodeContentContent {
-      value: String
-      nodeType: String
-    }
-    
-    type ContentfulSermonSys @derivedTypes {
+    type ContentfulServiceSys @derivedTypes {
       revision: Int
-      contentType: ContentfulSermonSysContentType
+      contentType: ContentfulServiceSysContentType
     }
     
-    type ContentfulSermonSysContentType @derivedTypes {
-      sys: ContentfulSermonSysContentTypeSys
+    type ContentfulServiceSysContentType @derivedTypes {
+      sys: ContentfulServiceSysContentTypeSys
     }
     
-    type ContentfulSermonSysContentTypeSys {
+    type ContentfulServiceSysContentTypeSys {
       type: String
       linkType: String
       id: String

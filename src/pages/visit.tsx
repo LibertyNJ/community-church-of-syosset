@@ -1,17 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import CenteredTextColumn from '../components/CenteredTextColumn';
 import EmbeddedGoogleMap from '../components/EmbeddedGoogleMap';
 import Layout from '../components/Layout';
 import Lead from '../components/Lead';
 import LinkButton from '../components/LinkButton';
 import SEO from '../components/SEO';
 import { baseline } from '../style';
-
-const Container = styled.div`
-  margin: 0 auto;
-  max-width: 33em;
-`;
 
 const StyledEmbeddedGoogleMap = styled(EmbeddedGoogleMap)`
   border-radius: ${baseline};
@@ -28,7 +24,7 @@ const VisitPage: React.FC = () => (
     <SEO title="Visit" />
     <Layout>
       <h1>Visit</h1>
-      <Container>
+      <CenteredTextColumn>
         <Lead>
           Our congregation is diverse, yet intimate; our service traditional,
           yet interactive.
@@ -36,15 +32,12 @@ const VisitPage: React.FC = () => (
         <section>
           <h2>Worship service</h2>
           <p>
-            Sundays at <time dateTime="10:00">10:00 AM</time>.
-          </p>
-          <p>
-            Our hour-long worship service features hymnody, anthems sung by the
-            chancel choir, a children’s sermon, scripture lessons, biblical
-            preaching, and more. Prayer requests are welcomed from all in
-            attendance. In our tradition, all baptized members of the Christian
-            family are invited to receive communion on the first Sunday of each
-            month.
+            Our <time dateTime="10:00">10:00 AM</time> Sunday worship service
+            features hymnody, anthems sung by the chancel choir, a children’s
+            sermon, scripture lessons, biblical preaching, and more. Prayer
+            requests are welcomed from all in attendance. In our tradition, all
+            baptized members of the Christian family are invited to receive
+            communion on the first Sunday of each month.
           </p>
           <p>
             Worship is a time of renewal and refreshment. After the service we
@@ -78,12 +71,12 @@ const VisitPage: React.FC = () => (
         <section>
           <h2>Let us know you’re coming</h2>
           <p>
-            We’re looking forward to meeting you! Drop us a note and our
-            greeters will be ready to welcome you on your first visit.
+            We are looking forward to meeting you! Drop us a note and we will be
+            eager to welcome you on your first visit.
           </p>
           <StyledLinkButton to="/contact">Contact us</StyledLinkButton>
         </section>
-      </Container>
+      </CenteredTextColumn>
     </Layout>
   </>
 );

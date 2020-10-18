@@ -1,15 +1,16 @@
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { Document } from '@contentful/rich-text-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { graphql } from 'gatsby';
-import Image, { FixedObject } from 'gatsby-image';
+import { FixedObject } from 'gatsby-image';
 import React from 'react';
 import styled from 'styled-components';
 
+import CenteredTextColumn from '../components/CenteredTextColumn';
 import FixedImage from '../components/FixedImage';
 import Layout from '../components/Layout';
+import Lead from '../components/Lead';
 import SEO from '../components/SEO';
-import { baseline, color } from '../style';
+import { baseline } from '../style';
 
 export const query = graphql`
   query PersonTemplate($id: String!) {
@@ -27,11 +28,6 @@ export const query = graphql`
       role
     }
   }
-`;
-
-const Container = styled.div`
-  margin: 0 auto;
-  max-width: 33em;
 `;
 
 const ImageFrame = styled.div`
@@ -67,24 +63,22 @@ const PersonTemplate: React.FC<Props> = ({ data }) => (
     <SEO title={data.contentfulPerson.name} />
     <Layout>
       <h1>{data.contentfulPerson.name}</h1>
-      <Container>
+      <CenteredTextColumn>
         <ImageFrame>
           <StyledFixedImage
             image={data.contentfulPerson.image}
+            imageWrapperStyle={{ display: 'block' }}
             placeholderIcon="user"
             placeholderIconSize={`calc(62 * ${baseline})`}
           />
         </ImageFrame>
-        <p>{data.contentfulPerson.role}</p>
-        <section>
-          <h2>Biography</h2>
-          {data.contentfulPerson.biography ? (
-            documentToReactComponents(data.contentfulPerson.biography.json)
-          ) : (
-            <p>No biography!</p>
-          )}
-        </section>
-      </Container>
+        <Lead>{data.contentfulPerson.role}</Lead>
+        {data.contentfulPerson.biography ? (
+          documentToReactComponents(data.contentfulPerson.biography.json)
+        ) : (
+          <p>No biography… Check back soon!</p>
+        )}
+      </CenteredTextColumn>
     </Layout>
   </>
 );

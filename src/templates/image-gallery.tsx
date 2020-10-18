@@ -7,6 +7,7 @@ import GatsbyImage from 'gatsby-image/withIEPolyfill';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import CenteredTextColumn from '../components/CenteredTextColumn';
 import Layout from '../components/Layout';
 import PageButtons from '../components/PageButtons';
 import SEO from '../components/SEO';
@@ -49,11 +50,6 @@ const Columns = styled.div`
   @media (min-width: ${breakpoint.lg}) {
     columns: 3;
   }
-`;
-
-const Container = styled.div`
-  margin: 0 auto;
-  max-width: 33em;
 `;
 
 type SelectedImageContainerProps = {
@@ -183,12 +179,13 @@ const ImageGalleryTemplate: React.FC<Props> = ({ data, pageContext }) => {
       <SEO title={data.contentfulImageGallery.title} />
       <Layout>
         <h1>{data.contentfulImageGallery.title}</h1>
-        <Container>
-          {data.contentfulImageGallery.description &&
-            documentToReactComponents(
+        {data.contentfulImageGallery.description && (
+          <CenteredTextColumn>
+            {documentToReactComponents(
               data.contentfulImageGallery.description.json
             )}
-        </Container>
+          </CenteredTextColumn>
+        )}
         <Columns>{images}</Columns>
         <Modal
           isVisible={!!selectedImage}
@@ -203,7 +200,7 @@ const ImageGalleryTemplate: React.FC<Props> = ({ data, pageContext }) => {
             </SelectedImageContainer>
           )}
         </Modal>
-        <Container>
+        <CenteredTextColumn>
           <ShareSection contentType="image gallery" />
           {(pageContext.nextSlug || pageContext.prevSlug) && (
             <StyledPageButtons
@@ -212,7 +209,7 @@ const ImageGalleryTemplate: React.FC<Props> = ({ data, pageContext }) => {
               rootSlug="images"
             />
           )}
-        </Container>
+        </CenteredTextColumn>
       </Layout>
     </>
   );

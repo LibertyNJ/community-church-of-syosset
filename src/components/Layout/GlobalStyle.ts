@@ -116,6 +116,10 @@ const GlobalStyle = createGlobalStyle`
     font-style: normal;
   }
 
+  .hide-overflow {
+    overflow: hidden;
+  }
+
   @media (min-width: ${breakpoint.md}) {
     h1 {
       font-size: ${typography.fontSize.h1.md};

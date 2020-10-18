@@ -35,7 +35,7 @@ type Props = {
     };
     id: string;
     name: string;
-    url: string;
+    url?: string;
   }[];
 };
 

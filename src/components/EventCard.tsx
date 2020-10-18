@@ -82,6 +82,7 @@ const EventCard: React.FC<Props> = ({
       <StyledLink to={`/events/${slug}`}>
         <StyledFixedImage
           image={image}
+          imageWrapperStyle={{ display: 'block' }}
           placeholderIcon={['far', 'calendar']}
           placeholderIconSize={`calc(12 * ${baseline})`}
         />

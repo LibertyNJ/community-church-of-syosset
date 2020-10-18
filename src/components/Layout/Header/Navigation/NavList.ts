@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { baseline, breakpoint, color } from '../../../../style';
+import { breakpoint, color } from '../../../../style';
 
 type Props = {
   headerHeight: number;

@@ -16,6 +16,7 @@ type Props = {
     description?: string;
     fixed: FixedObject;
   };
+  imageWrapperStyle?: object;
   placeholderIcon: IconProp;
   placeholderIconSize: string;
 };
@@ -23,6 +24,7 @@ type Props = {
 const FixedImage: React.FC<Props> = ({
   className,
   image,
+  imageWrapperStyle,
   placeholderIcon,
   placeholderIconSize,
 }) =>
@@ -31,6 +33,7 @@ const FixedImage: React.FC<Props> = ({
       alt={image.description}
       className={className}
       fixed={image.fixed}
+      style={{ ...imageWrapperStyle }}
     />
   ) : (
     <ImagePlaceholderIcon

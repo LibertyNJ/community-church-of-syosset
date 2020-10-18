@@ -1,12 +1,10 @@
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-import { Document } from '@contentful/rich-text-types';
 import { graphql, Link } from 'gatsby';
 import Image, { FixedObject } from 'gatsby-image';
 import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import AudioPlayer from '../components/AudioPlayer';
+import CenteredTextColumn from '../components/CenteredTextColumn';
 import Layout from '../components/Layout';
 import PageButtons from '../components/PageButtons';
 import SEO from '../components/SEO';
@@ -16,13 +14,8 @@ import VideoPlayer from '../components/VideoPlayer';
 import { baseline, color } from '../style';
 
 export const query = graphql`
-  query SermonTemplate($id: String!) {
-    contentfulSermon(id: { eq: $id }) {
-      audio {
-        file {
-          url
-        }
-      }
+  query ServiceTemplate($id: String!) {
+    contentfulService(id: { eq: $id }) {
       date
       preacher {
         image {
@@ -37,14 +30,7 @@ export const query = graphql`
       }
       scriptureReadings
       title
-      transcript {
-        json
-      }
-      video {
-        file {
-          url
-        }
-      }
+      videoUrl
     }
   }
 `;
@@ -55,11 +41,6 @@ const DATE_FORMAT_OPTIONS = {
   weekday: 'long',
   year: 'numeric',
 };
-
-const Container = styled.div`
-  margin: 0 auto;
-  max-width: 33em;
-`;
 
 const IconFrame = styled.div`
   align-items: center;
@@ -79,11 +60,6 @@ const Preacher = styled.div`
 
 const PreacherDetails = styled.p`
   margin-bottom: 0;
-`;
-
-const StyledAudioPlayer = styled(AudioPlayer)`
-  margin: calc(6 * ${baseline}) 0;
-  width: 100%;
 `;
 
 const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
@@ -110,12 +86,7 @@ const StyledVideoPlayer = styled(VideoPlayer)`
 
 type Props = {
   data: {
-    contentfulSermon: {
-      audio?: {
-        file: {
-          url: string;
-        };
-      };
+    contentfulService: {
       date: string;
       preacher: {
         image?: {
@@ -128,14 +99,7 @@ type Props = {
       };
       scriptureReadings: string[];
       title: string;
-      transcript?: {
-        json: Document;
-      };
-      video?: {
-        file: {
-          url: string;
-        };
-      };
+      videoUrl: string;
     };
   };
   pageContext: {
@@ -144,8 +108,8 @@ type Props = {
   };
 };
 
-const SermonTemplate: React.FC<Props> = ({ data, pageContext }) => {
-  const dateObject = new Date(data.contentfulSermon.date);
+const ServiceTemplate: React.FC<Props> = ({ data, pageContext }) => {
+  const dateObject = new Date(data.contentfulService.date);
   const dateString = dateObject.toLocaleDateString(
     undefined,
     DATE_FORMAT_OPTIONS
@@ -153,16 +117,16 @@ const SermonTemplate: React.FC<Props> = ({ data, pageContext }) => {
 
   return (
     <>
-      <SEO title={data.contentfulSermon.title} />
+      <SEO title={data.contentfulService.title} />
       <Layout>
-        <h1>{data.contentfulSermon.title}</h1>
-        <Container>
-          <Link to={`/people/${data.contentfulSermon.preacher.slug}`}>
+        <h1>{data.contentfulService.title}</h1>
+        <CenteredTextColumn>
+          <Link to={`/people/${data.contentfulService.preacher.slug}`}>
             <Preacher>
-              {data.contentfulSermon.preacher.image ? (
+              {data.contentfulService.preacher.image ? (
                 <StyledImage
-                  alt={data.contentfulSermon.preacher.image.description}
-                  fixed={data.contentfulSermon.preacher.image.fixed}
+                  alt={data.contentfulService.preacher.image.description}
+                  fixed={data.contentfulService.preacher.image.fixed}
                 />
               ) : (
                 <IconFrame>
@@ -170,47 +134,30 @@ const SermonTemplate: React.FC<Props> = ({ data, pageContext }) => {
                 </IconFrame>
               )}
               <PreacherDetails>
-                <b>{data.contentfulSermon.preacher.name}</b> <br />
-                {data.contentfulSermon.preacher.role}
+                <b>{data.contentfulService.preacher.name}</b> <br />
+                {data.contentfulService.preacher.role}
               </PreacherDetails>
             </Preacher>
           </Link>
           <p>
-            <time dateTime={data.contentfulSermon.date}>{dateString}</time>
+            <time dateTime={data.contentfulService.date}>{dateString}</time>
           </p>
           <StyledTitledList title="Scripture readings" type="unordered">
-            {data.contentfulSermon.scriptureReadings}
+            {data.contentfulService.scriptureReadings}
           </StyledTitledList>
-          {data.contentfulSermon.video && (
-            <section>
-              <h2>Video</h2>
-              <StyledVideoPlayer url={data.contentfulSermon.video.file.url} />
-            </section>
-          )}
-          {data.contentfulSermon.audio && (
-            <section>
-              <h2>Audio</h2>
-              <StyledAudioPlayer url={data.contentfulSermon.audio.file.url} />
-            </section>
-          )}
-          {data.contentfulSermon.transcript && (
-            <section>
-              <h2>Transcript</h2>
-              {documentToReactComponents(data.contentfulSermon.transcript.json)}
-            </section>
-          )}
-          <ShareSection contentType="sermon" />
+          <StyledVideoPlayer url={data.contentfulService.videoUrl} />
+          <ShareSection contentType="service" />
           {(pageContext.nextSlug || pageContext.prevSlug) && (
             <StyledPageButtons
               nextSlug={pageContext.nextSlug}
               prevSlug={pageContext.prevSlug}
-              rootSlug="sermons"
+              rootSlug="services"
             />
           )}
-        </Container>
+        </CenteredTextColumn>
       </Layout>
     </>
   );
 };
 
-export default SermonTemplate;
+export default ServiceTemplate;

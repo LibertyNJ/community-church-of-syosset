@@ -3,6 +3,7 @@ import { FixedObject } from 'gatsby-image';
 import React from 'react';
 import styled from 'styled-components';
 
+import CenteredTextColumn from '../components/CenteredTextColumn';
 import ImageGalleryCardList from '../components/ImageGalleryCardList';
 import Layout from '../components/Layout';
 import Lead from '../components/Lead';
@@ -34,13 +35,9 @@ export const query = graphql`
   }
 `;
 
-const Container = styled.div`
-  margin: 0 auto;
-  max-width: 33em;
-`;
-
-const NoGalleriesNotice = styled.p`
+const NoGalleriesNotice = styled(Lead)`
   font-weight: bold;
+  text-align: center;
 `;
 
 const StyledImageGalleryCardList = styled(ImageGalleryCardList)`
@@ -90,27 +87,34 @@ const ImageGalleriesPageTemplate: React.FC<Props> = ({ data, pageContext }) => {
       />
       <Layout>
         <h1>Images</h1>
-        <Container>
+        <CenteredTextColumn>
           {pageContext.pageIsIndex ? (
-            <></>
+            <>
+              <Lead>
+                Want to see what we are all about or revisit a past event?
+              </Lead>
+            </>
           ) : (
             <Lead>Page {pageContext.pageNumber}</Lead>
           )}
-          <p>Click on an image gallery to see more.</p>
-        </Container>
+          <p>Click on an gallery to see more images.</p>
+        </CenteredTextColumn>
         {imageGalleries.length ? (
           <StyledImageGalleryCardList imageGalleries={imageGalleries} />
         ) : (
-          <NoGalleriesNotice>No image galleries!</NoGalleriesNotice>
+          <NoGalleriesNotice>
+            No image galleries… <br />
+            Check back soon!
+          </NoGalleriesNotice>
         )}
         {pageContext.totalPages > 1 && (
-          <Container>
+          <CenteredTextColumn>
             <StyledPagination
               lastPageNumber={pageContext.totalPages}
               pageNumber={pageContext.pageNumber}
               urlRoot="images"
             />
-          </Container>
+          </CenteredTextColumn>
         )}
       </Layout>
     </>

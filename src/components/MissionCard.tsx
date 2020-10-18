@@ -34,19 +34,30 @@ type Props = {
     fixed: FixedObject;
   };
   name: string;
-  url: string;
+  url?: string;
 };
 
 const MissionCard: React.FC<Props> = ({ className, image, name, url }) => (
   <Card className={className}>
-    <StyledExternalLink href={url}>
-      <StyledFixedImage
-        image={image}
-        placeholderIcon="hands-helping"
-        placeholderIconSize={`calc(50 * ${baseline})`}
-      />
-      <Name>{name}</Name>
-    </StyledExternalLink>
+    {url ? (
+      <StyledExternalLink href={url}>
+        <StyledFixedImage
+          image={image}
+          placeholderIcon="hands-helping"
+          placeholderIconSize={`calc(50 * ${baseline})`}
+        />
+        <Name>{name}</Name>
+      </StyledExternalLink>
+    ) : (
+      <>
+        <StyledFixedImage
+          image={image}
+          placeholderIcon="hands-helping"
+          placeholderIconSize={`calc(50 * ${baseline})`}
+        />
+        <Name>{name}</Name>
+      </>
+    )}
   </Card>
 );
 

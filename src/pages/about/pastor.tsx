@@ -1,31 +1,30 @@
-import { Document } from '@contentful/rich-text-types';
 import { graphql, useStaticQuery } from 'gatsby';
-import Image, { FluidObject } from 'gatsby-image';
 import React from 'react';
 import styled from 'styled-components';
 
+import CenteredTextColumn from '../../components/CenteredTextColumn';
+import FlexContainer from '../../components/FlexContainer';
 import Layout from '../../components/Layout';
 import LinkButton from '../../components/LinkButton';
 import SEO from '../../components/SEO';
 import VideoPlayer from '../../components/VideoPlayer';
 import { baseline } from '../../style';
 
-const Container = styled.div`
-  margin: 0 auto;
-  max-width: 33em;
-`;
-
 const PastorName = styled.h2`
   text-align: center;
 `;
 
-const StyledImage = styled(Image)`
-  border-radius: ${baseline};
-  margin: calc(6 * ${baseline}) 0;
-`;
-
 const StyledLinkButton = styled(LinkButton)`
-  margin-bottom: calc(6 * ${baseline});
+  flex: 1;
+  margin: 0 calc(3 * ${baseline}) calc(6 * ${baseline});
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
 `;
 
 const StyledVideoPlayer = styled(VideoPlayer)`
@@ -34,16 +33,12 @@ const StyledVideoPlayer = styled(VideoPlayer)`
 `;
 
 type Data = {
-  contentfulAsset?: {
-    file: {
-      url: string;
+  contentfulJsonObject: {
+    json: {
+      pastorsMessageVideoUrl: string;
     };
   };
   contentfulPerson: {
-    image?: {
-      description?: string;
-      fluid: FluidObject;
-    };
     name: string;
   };
 };
@@ -51,18 +46,12 @@ type Data = {
 const PastorPage: React.FC = () => {
   const data = useStaticQuery<Data>(graphql`
     query PastorPage {
-      contentfulAsset(title: { eq: "Pastor’s Video Message" }) {
-        file {
-          url
+      contentfulJsonObject(title: { eq: "Website Data" }) {
+        json {
+          pastorsMessageVideoUrl
         }
       }
       contentfulPerson(role: { eq: "Pastor" }) {
-        image {
-          description
-          fluid {
-            ...GatsbyContentfulFluid
-          }
-        }
         name
       }
     }
@@ -70,25 +59,24 @@ const PastorPage: React.FC = () => {
 
   return (
     <>
-      <SEO title="Pastor" />
+      <SEO title="Pastor’s Message" />
       <Layout>
-        <h1>Our pastor</h1>
-        <Container>
+        <h1>Pastor’s message</h1>
+        <CenteredTextColumn>
           <section>
-            <PastorName>{data.contentfulPerson.name}</PastorName>
-            {data.contentfulAsset ? (
-              <StyledVideoPlayer url={data.contentfulAsset.file.url} />
-            ) : (
-              data.contentfulPerson.image && (
-                <StyledImage
-                  alt={data.contentfulPerson.image.description}
-                  fluid={data.contentfulPerson.image.fluid}
-                />
-              )
-            )}
+            <PastorName>
+              A welcome from <br />
+              {data.contentfulPerson.name}
+            </PastorName>
+            <StyledVideoPlayer
+              url={data.contentfulJsonObject.json.pastorsMessageVideoUrl}
+            />
           </section>
-          <StyledLinkButton to="/visit">Visit us</StyledLinkButton>
-        </Container>
+          <FlexContainer>
+            <StyledLinkButton to="/visit">Visit us</StyledLinkButton>
+            <StyledLinkButton to="/about">Who we are</StyledLinkButton>
+          </FlexContainer>
+        </CenteredTextColumn>
       </Layout>
     </>
   );

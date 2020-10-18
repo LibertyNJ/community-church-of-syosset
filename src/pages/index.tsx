@@ -1,17 +1,18 @@
+import { Document } from '@contentful/rich-text-types';
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { graphql, useStaticQuery } from 'gatsby';
 import { FluidObject } from 'gatsby-image';
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import CCSLogo from '../components/CCSLogo';
+import FlexContainer from '../components/FlexContainer';
 import Layout from '../components/Layout';
 import Lead from '../components/Lead';
 import LinkButton from '../components/LinkButton';
+import Modal from '../components/Modal';
 import SEO from '../components/SEO';
 import { baseline, color } from '../style';
-
-const ButtonContainer = styled.div`
-  display: flex;
-`;
 
 const Container = styled.div`
   display: flex;
@@ -53,6 +54,11 @@ const StyledLinkButton = styled(LinkButton)`
 `;
 
 type Data = {
+  alert?: {
+    content: {
+      json: Document;
+    } | null;
+  };
   backgroundImage?: {
     fluid: FluidObject;
   };
@@ -66,15 +72,20 @@ type Data = {
 const HomePage: React.FC = () => {
   const data = useStaticQuery<Data>(graphql`
     query HomePage {
+      alert: contentfulMessage(title: { eq: "Homepage Alert" }) {
+        content {
+          json
+        }
+      }
       backgroundImage: contentfulAsset(
-        title: { eq: "Home Page Background Image" }
+        title: { eq: "Homepage Background Image" }
       ) {
         fluid {
           ...GatsbyContentfulFluid
         }
       }
       backgroundVideo: contentfulAsset(
-        title: { eq: "Home Page Background Video" }
+        title: { eq: "Homepage Background Video" }
       ) {
         file {
           url
@@ -82,6 +93,8 @@ const HomePage: React.FC = () => {
       }
     }
   `);
+
+  const [alertIsShown, setAlertIsShown] = useState<boolean>(!!data.alert);
 
   const backgroundImageStack = data.backgroundImage
     ? [
@@ -93,6 +106,14 @@ const HomePage: React.FC = () => {
   return (
     <>
       <SEO title="Home" />
+      {data.alert?.content && (
+        <Modal
+          isShown={alertIsShown}
+          onDismiss={() => handleModalDismiss(setAlertIsShown)}
+        >
+          {documentToReactComponents(data.alert.content.json)}
+        </Modal>
+      )}
       <StyledLayout
         backgroundImage={backgroundImageStack}
         backgroundVideoOverlay="rgba(0, 191, 255, 0.65)"
@@ -102,7 +123,9 @@ const HomePage: React.FC = () => {
         bodyDisplay="flex"
       >
         <Container>
-          <h1>Community Church of&nbsp;Syosset</h1>
+          <h1>
+            <CCSLogo whiteScale />
+          </h1>
           <Lead>
             No matter who you are, <br />
             or where you are on life’s journey, <br />
@@ -112,14 +135,20 @@ const HomePage: React.FC = () => {
             An open and affirming congregation of the United Church of Christ,
             where God is still speaking.
           </p>
-          <ButtonContainer>
+          <FlexContainer>
             <StyledLinkButton to="/visit">Visit us</StyledLinkButton>
-            <StyledLinkButton to="/about">Who we are</StyledLinkButton>
-          </ButtonContainer>
+            <StyledLinkButton to="/about/pastor">A welcome</StyledLinkButton>
+          </FlexContainer>
         </Container>
       </StyledLayout>
     </>
   );
 };
+
+function handleModalDismiss(
+  setAlertIsShown: React.Dispatch<React.SetStateAction<boolean>>
+) {
+  setAlertIsShown(false);
+}
 
 export default HomePage;

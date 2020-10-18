@@ -49,6 +49,7 @@ const TeamMemberCard: React.FC<Props> = ({
     <StyledLink to={`/people/${slug}`}>
       <StyledFixedImage
         image={image}
+        imageWrapperStyle={{ display: 'block' }}
         placeholderIcon="user"
         placeholderIconSize={`calc(62 * ${baseline})`}
       />

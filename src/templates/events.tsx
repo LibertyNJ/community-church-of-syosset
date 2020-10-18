@@ -3,6 +3,7 @@ import { FixedObject } from 'gatsby-image';
 import React from 'react';
 import styled from 'styled-components';
 
+import CenteredTextColumn from '../components/CenteredTextColumn';
 import EventCardList from '../components/EventCardList';
 import Layout from '../components/Layout';
 import Lead from '../components/Lead';
@@ -35,13 +36,9 @@ export const query = graphql`
   }
 `;
 
-const Container = styled.div`
-  margin: 0 auto;
-  max-width: 33em;
-`;
-
-const NoEventsNotice = styled.p`
+const NoEventsNotice = styled(Lead)`
   font-weight: bold;
+  text-align: center;
 `;
 
 const StyledEventCardList = styled(EventCardList)`
@@ -100,7 +97,7 @@ const EventsPageTemplate: React.FC<Props> = ({ data, pageContext }) => {
       />
       <Layout>
         <h1>Events</h1>
-        <Container>
+        <CenteredTextColumn>
           {pageContext.pageIsIndex ? (
             <>
               <Lead>We are more than just Sunday morning.</Lead>
@@ -113,20 +110,23 @@ const EventsPageTemplate: React.FC<Props> = ({ data, pageContext }) => {
             <Lead>Page {pageContext.pageNumber}</Lead>
           )}
           <p>Click on an event to see details.</p>
-        </Container>
+        </CenteredTextColumn>
         {events.length ? (
           <StyledEventCardList events={events} />
         ) : (
-          <NoEventsNotice>No upcoming events!</NoEventsNotice>
+          <NoEventsNotice>
+            No upcoming events… <br />
+            Check back soon!
+          </NoEventsNotice>
         )}
         {pageContext.totalPages > 1 && (
-          <Container>
+          <CenteredTextColumn>
             <StyledPagination
               lastPageNumber={pageContext.totalPages}
               pageNumber={pageContext.pageNumber}
               urlRoot="events"
             />
-          </Container>
+          </CenteredTextColumn>
         )}
       </Layout>
     </>

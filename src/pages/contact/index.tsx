@@ -2,16 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Button from '../../components/Button';
+import CenteredTextColumn from '../../components/CenteredTextColumn';
 import FormControl from '../../components/FormControl';
 import Layout from '../../components/Layout';
 import Lead from '../../components/Lead';
 import SEO from '../../components/SEO';
 import { baseline } from '../../style';
-
-const Container = styled.div`
-  margin: 0 auto;
-  max-width: 33em;
-`;
 
 const StyledFormControl = styled(FormControl)`
   margin-bottom: calc(6 * ${baseline});
@@ -28,12 +24,9 @@ const ContactPage: React.FC = () => (
     <SEO title="Contact" />
     <Layout>
       <h1>Contact</h1>
-      <Container>
+      <CenteredTextColumn>
         <Lead>We want to hear from you.</Lead>
-        <p>
-          Have a question or want to know more? Fill out the form below to let
-          us know what you think.
-        </p>
+        <p>Have a question or want to know more? Fill out the form below.</p>
         <form
           action="/contact/success"
           data-netlify="true"
@@ -58,7 +51,7 @@ const ContactPage: React.FC = () => (
           />
           <StyledButton type="submit">Submit</StyledButton>
         </form>
-      </Container>
+      </CenteredTextColumn>
     </Layout>
   </>
 );
