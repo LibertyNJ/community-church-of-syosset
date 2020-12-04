@@ -109,7 +109,8 @@ type Props = {
 };
 
 const ServiceTemplate: React.FC<Props> = ({ data, pageContext }) => {
-  const dateObject = new Date(data.contentfulService.date);
+  const [year, month, day] = data.contentfulService.date.split('-');
+  const dateObject = new Date(+year, +month - 1, +day);
   const dateString = dateObject.toLocaleDateString(
     undefined,
     DATE_FORMAT_OPTIONS

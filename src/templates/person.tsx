@@ -76,7 +76,7 @@ const PersonTemplate: React.FC<Props> = ({ data }) => (
         {data.contentfulPerson.biography ? (
           documentToReactComponents(data.contentfulPerson.biography.json)
         ) : (
-          <p>No biography… Check back soon!</p>
+          <p>No biography yet… Check back soon!</p>
         )}
       </CenteredTextColumn>
     </Layout>

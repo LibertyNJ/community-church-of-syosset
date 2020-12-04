@@ -33,20 +33,16 @@ const VisitPage: React.FC = () => (
           <h2>Worship service</h2>
           <p>
             Our <time dateTime="10:00">10:00 AM</time> Sunday worship service
-            features hymnody, anthems sung by the chancel choir, a children’s
-            sermon, scripture lessons, biblical preaching, and more. Prayer
-            requests are welcomed from all in attendance. In our tradition, all
-            baptized members of the Christian family are invited to receive
-            communion on the first Sunday of each month.
+            features hymnody, anthems sung by the chancel choir, scripture
+            lessons, biblical preaching, and more. Prayer requests are welcomed
+            from all in attendance. In our tradition, all baptized members of
+            the Christian family are invited to receive communion on the first
+            Sunday of each month.
           </p>
           <p>
             Worship is a time of renewal and refreshment. After the service we
             share fellowship with food and refreshment, and take an opportunity
             to build our friendships.
-          </p>
-          <p>
-            Church school is held during the worship service, which is
-            appropriate for children of all ages.
           </p>
         </section>
         <section>

@@ -68,7 +68,8 @@ const ServiceCard: React.FC<Props> = ({
   slug,
   title,
 }) => {
-  const dateObject = new Date(date);
+  const [year, month, day] = date.split('-');
+  const dateObject = new Date(+year, +month - 1, +day);
   const dateString = dateObject.toLocaleDateString(
     undefined,
     DATE_FORMAT_OPTIONS

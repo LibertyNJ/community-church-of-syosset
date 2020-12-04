@@ -165,7 +165,7 @@ Past services can be added by publishing a new **Service** in Contentful.
 
 A service requires a preacher, who may be any Contentful **Person**. You can choose an already existing **Person** or create a new one while creating the **Service**.
 
-If you are using a YouTube video for the **Service** video URL, you should use this format: "https://www.youtube.com/embed/<video code here>". This format enables an embedded YouTube video player with enhanced features, and the video may not play correctly without it.
+If you are using a YouTube video for the **Service** video URL, you should use this format: "https<nolink>://www.youtube.com/embed/\*\*\*video code here\*\*\*". This format enables an embedded YouTube video player with enhanced features, and the video may not play correctly without it.
 
 ### Images
 
