@@ -28,6 +28,7 @@ const Window = styled.div`
 const Content = styled.div`
   background-color: ${color.white};
   color: ${color.body};
+  max-width: 33rem;
 `;
 
 type Props = {

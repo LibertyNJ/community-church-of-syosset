@@ -2,8 +2,8 @@ import BackgroundImage, { IFluidObject } from 'gatsby-background-image';
 import React from 'react';
 import styled from 'styled-components';
 
-import BackgroundVideo from '../BackgroundVideo';
 import { baseline, breakpoint } from '../../style';
+import BackgroundVideo from '../BackgroundVideo';
 
 type BreakpointContainerProps = {
   display?: string;

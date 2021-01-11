@@ -58,7 +58,7 @@ type Props = {
     };
   };
   pageContext: {
-    address: {
+    address?: {
       city: string;
       number: string;
       state: string;
@@ -66,7 +66,7 @@ type Props = {
       zip: string;
     };
     nextSlug?: string;
-    placeId: string;
+    placeId?: string;
     prevSlug?: string;
   };
 };
@@ -101,22 +101,24 @@ const EventTemplate: React.FC<Props> = ({ data, pageContext }) => {
           </section>
           <section>
             <h2>Location</h2>
-            {process.env.GATSBY_GOOGLE_MAPS_EMBED_API_KEY && (
-              <StyledEmbeddedGoogleMap
-                apiKey={process.env.GATSBY_GOOGLE_MAPS_EMBED_API_KEY}
-                aspectRatio={{ x: 1, y: 1 }}
-                mode="place"
-                q={`place_id:${pageContext.placeId}`}
-                title="A map of the event location"
-              />
-            )}
-            <address>
+            {process.env.GATSBY_GOOGLE_MAPS_EMBED_API_KEY &&
+              pageContext.placeId && (
+                <StyledEmbeddedGoogleMap
+                  apiKey={process.env.GATSBY_GOOGLE_MAPS_EMBED_API_KEY}
+                  aspectRatio={{ x: 1, y: 1 }}
+                  mode="place"
+                  q={`place_id:${pageContext.placeId}`}
+                  title="A map of the event location"
+                />
+              )}
+            {pageContext.address && (
               <p>
                 {pageContext.address.number} {pageContext.address.street} <br />
                 {pageContext.address.city}, {pageContext.address.state}{' '}
                 {pageContext.address.zip}
               </p>
-            </address>
+            )}
+            <address></address>
           </section>
           {data.contentfulEvent.details && (
             <section>

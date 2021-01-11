@@ -87,10 +87,14 @@ async function createEventPages(createPage, events) {
     createPage({
       component: path.resolve('./src/templates/event.tsx'),
       context: {
-        address: geocodeDataCache[coordinates].address,
+        address: geocodeDataCache[coordinates]
+          ? geocodeDataCache[coordinates].address
+          : undefined,
         id: event.node.id,
         nextSlug: event.next && event.next.slug,
-        placeId: geocodeDataCache[coordinates].placeId,
+        placeId: geocodeDataCache[coordinates]
+          ? geocodeDataCache[coordinates].placeId
+          : undefined,
         prevSlug: event.previous && event.previous.slug,
       },
       path: `/events/${event.node.slug}`,
