@@ -4,7 +4,7 @@ const path = require('path');
 module.exports = async ({ actions: { createPage }, graphql }) => {
   const result = await graphql(`
     {
-      allContentfulEvent(filter: {date: {gt: "${new Date().toISOString()}"}}, sort: {fields: date, order: ASC}) {
+      allContentfulEvent(sort: { fields: date, order: ASC }) {
         edges {
           next {
             slug
@@ -24,7 +24,7 @@ module.exports = async ({ actions: { createPage }, graphql }) => {
       }
       allContentfulImageGallery(sort: {fields: title, order: ASC}) {
         edges {
-          next{
+          next {
             slug
           }
           node {
@@ -44,7 +44,7 @@ module.exports = async ({ actions: { createPage }, graphql }) => {
           }
         }
       }
-      allContentfulService(sort: {fields: date, order: DESC}) {
+      allContentfulService(sort: { fields: date, order: DESC }) {
         edges {
           next {
             slug
@@ -137,10 +137,12 @@ async function getGeocodeData(coordinates) {
       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coordinates}&key=${process.env.GOOGLE_GEOCODING_API_KEY}`
     );
 
-    return {
-      address: createAddress(response.data.results[0].address_components),
-      placeId: response.data.results[0].place_id,
-    };
+    return response.data.results.length > 0
+      ? {
+          address: createAddress(response.data.results[0].address_components),
+          placeId: response.data.results[0].place_id,
+        }
+      : undefined;
   } catch (error) {
     console.error(error);
   }

@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/69e88810-75e4-445e-b067-081cfa575618/deploy-status)](https://app.netlify.com/sites/uccsyosset/deploys)
+
 # Community Church of Syosset Website
 
 Created by Nathaniel J. Liberty, with love for the Community Church of Syosset.
